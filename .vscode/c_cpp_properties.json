@@ -5,6 +5,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "/usr/include/",
                 "/usr/include/c++/7.3.0/",
                 "/usr/include/c++",
                 "/usr/include/c++ gcc -v",

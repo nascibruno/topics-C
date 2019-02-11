@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "debug",
+            "label": "Compile and run Windows",
             "type": "shell",
             "command": "",
             "args": [
@@ -19,7 +19,7 @@
             ]
         },
         {
-            "label": "Compile and run",
+            "label": "Compile and run Linux",
             "type": "shell",
             "command": "",
             "args": [
