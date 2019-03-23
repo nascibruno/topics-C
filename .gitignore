@@ -2,6 +2,5 @@ tasks.json
 settings.json
 c_cpp_properties.json
 .vscode
-.gitignore
 soma.c
 teste.c
