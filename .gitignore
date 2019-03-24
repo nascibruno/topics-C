@@ -1,4 +1,9 @@
 /.vscode/*
-**/topics-C/*.json
-soma.c
-tasks.json
+/topics-C/*.json
+/topics-C/.vscode/*.json
+*.json
+/.vscode/tasks.json
+/.vscode/settings.json
+/.vscode/c_cpp_properties.json
+
+
