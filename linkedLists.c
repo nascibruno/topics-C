@@ -1,10 +1,10 @@
 #include <stdio.h>//printf
 #include <stdlib.h>//malloc
-#include <conio.h>
-#include <iostream>
+//#include <conio.h>
+//#include <iostream>
 
 void menu(){
-      clrscr();
+     // clrscr();@@@@@
     printf("\n MENU DE OPÇÕES \n");
     printf("\n1 - Inserir no início da lista");
     printf("\n2 - Inserir no fim da lista");
@@ -34,9 +34,9 @@ void main() {
 
     do{
           // menu de opções
-            menu();
+          //  menu();@@@@@@@
             //limpa tela
-            clrscr();
+            //clrscr();  @@@@@@
             scanf_s("%d", &op);//escolhe a opção
             if( op < 1 || op > 6){ //filtro
                 printf("Opção Inválida");}
@@ -189,4 +189,4 @@ void main() {
      }while(op != 6);
     
 }
-
+  
