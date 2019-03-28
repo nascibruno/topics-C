@@ -3,18 +3,8 @@
 //#include <conio.h>
 //#include <iostream>
 
-void menu(){
-     // clrscr();@@@@@
-    printf("\n MENU DE OPÇÕES \n");
-    printf("\n1 - Inserir no início da lista");
-    printf("\n2 - Inserir no fim da lista");
-    printf("\n3 - Consultar toda a lista");
-    printf("\n4 - Remover da lista");
-    printf("\n5 - Esvaziar a lista");
-    printf("\n6 - Sair");
-    printf("\nDigite sua opção: ");
-}
 
+void menu(void);
 
 void main() {
             //Definindo o registro
@@ -29,40 +19,50 @@ void main() {
     t_list *aux;         //ponteiro auxiliar
     t_list *anterior;    //ponteiro auxiliar
     t_list *proximo;     //ponteiro para o proximo
+    t_list *head;
     //declara variaveis 
     int op, numero, achou;
 
     do{
           // menu de opções
-          //  menu();@@@@@@@
+          menu();
             //limpa tela
-            //clrscr();  @@@@@@
+            
             scanf_s("%d", &op);//escolhe a opção
             if( op < 1 || op > 6){ //filtro
                 printf("Opção Inválida");}
 
             if( op == 1 ){
              printf("Digite o numero a ser inserido no inicio da lista: ");
-             //list *novo = new list();
-             inicio = (t_list*) malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
-                                                        // retorna NULL caso NAO CONSIGA mALOCAR
-                           //aponta para preencher a estrutura  
+             
                 if(inicio == NULL){
-                    //lista vazia e o elemento sera o primeiro e o ultimo
-                    proximo = inicio;
-                    scanf_s("%d",&proximo->num);    // ponteiro para num na estrutura list
-                    proximo->prox = NULL;           //o primeiro e o ultimo
-                    /*inicio = novo;
-                    fim = novo;*/
-                    
+                     	//lista vazia e o elemento sera o primeiro e o ultimo
+				inicio = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
+													   // retorna NULL caso NAO CONSIGA mALOCAR
+						  //aponta para preencher a estrutura 
+				
+				anterior = NULL;
+				head = inicio; // NOVO HEAD
+				printf("(A)Primeiro elemento =>: ");
+				scanf("%d", &(head -> num));	    // ponteiro para num na estrutura list o primeiro e o ultimo
+				//proximo->prox = NULL;
+				
+				/*inicio = novo;
+				fim = novo;*/
                 }else{
                     //se alista contem elementos e o novo elemento sera inserido no inic
                         //aloca nova memoria para o proximo campo TRABALHANDO COM OS ENDEREÇOS
-                    proximo->prox = (t_list*)malloc(sizeof(t_list));
-                    proximo = inicio;
-                    scanf_s("%d",&proximo->num);
-                    proximo = proximo->prox;         //proximo recebe o endereço desse novo espaço
-
+                    
+                anterior = head;
+                                 // NOVO HEAD
+                head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
+													   // retorna NULL caso NAO CONSIGA mALOCAR
+						                                 //aponta para preencher a estrutura 
+			   
+				proximo = anterior;
+				printf("(B)Primeiro elemento =>: ");
+				scanf("%d", &(head -> num));	
+			    head -> prox = anterior;
                     
                     
                 }
@@ -190,3 +190,15 @@ void main() {
     
 }
   
+
+  void menu(void){
+     
+    printf("\n MENU DE OPÇÕES \n");
+    printf("\n1 - Inserir no início da lista");
+    printf("\n2 - Inserir no fim da lista");
+    printf("\n3 - Consultar toda a lista");
+    printf("\n4 - Remover da lista");
+    printf("\n5 - Esvaziar a lista");
+    printf("\n6 - Sair");
+    printf("\nDigite sua opção: ");
+}
