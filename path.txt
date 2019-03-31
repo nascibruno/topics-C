@@ -1,0 +1,13 @@
+ Y:\Google Drive\PraticaCpp\topics-C\topics-C\linkedLists.c
+  
+     cd \Google Drive\PraticaCpp\topics-C\topics-C\Basic
+
+     cd \Google Drive\PraticaCpp\topics-C\topics-C\LinkedLists
+
+     cd \Google Drive\PraticaCpp\topics-C\topics-C\Struct
+
+     cd \Google Drive\PraticaCpp\topics-C\topics-C\Sort
+
+
+  cl linkedLists.c
+  linkedLists.exe
