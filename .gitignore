@@ -9,3 +9,13 @@
 .vscode/c_cpp_properties.json
 .vscode/tasks.json
 path.txt
+*.exe
+*.obj
+/Basic/*.obj
+/Basic/*.exe
+/LinkedLists/*.obj
+/LinkedLists/*.exe
+/Sort/*.obj
+/Sort/*.exe
+/Struct/*.obj
+/Struct/*.exe
