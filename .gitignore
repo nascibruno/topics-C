@@ -1,21 +1,15 @@
+#ignore All file in the folder and .json files
+
 /.vscode/*
-/topics-C/*.json
-/topics-C/.vscode/*.json
+
 *.json
-/.vscode/tasks.json
-/.vscode/settings.json
-/.vscode/c_cpp_properties.json
-.vscode
-.vscode/c_cpp_properties.json
-.vscode/tasks.json
+
+
+#ignore file path
 path.txt
+
+#ignore All types above
+*.out
 *.exe
 *.obj
-/Basic/*.obj
-/Basic/*.exe
-/LinkedLists/*.obj
-/LinkedLists/*.exe
-/Sort/*.obj
-/Sort/*.exe
-/Struct/*.obj
-/Struct/*.exe
+
