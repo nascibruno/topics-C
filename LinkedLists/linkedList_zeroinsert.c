@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 			printf("Opção Inválida");
 		}
 		
-		/*
+		
 		
 		if (op == 1) {
 			printf("Digite o numero a ser inserido no inicio da lista: ");
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
 
 
 
-		*/ 
+		
 		//##################SEGUNDA OPÇÃO
 		
 					if(op == 2 ){
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 
 					}
 					
-				/*	
+					
 					if(op == 3 ){
 
 						if(inicio == NULL){
@@ -203,9 +203,9 @@ int main(int argc, char *argv[]) {
 						}
 					}
 					getch();
-					*/
+					
 					//tests
-		*/
+		
 		
 	} while (op != 6);
 
