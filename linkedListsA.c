@@ -32,16 +32,18 @@ int main(int argc, char *argv[]) {
 						  //aponta para preencher a estrutura 
 				
 				anterior = NULL;
+                proximo=NULL;
 				head = inicio; // NOVO HEAD
 				printf("(A)Primeiro elemento =>: ");
 				scanf("%d", &(head -> num));	    // ponteiro para num na estrutura list o primeiro e o ultimo
-				//proximo->prox = NULL;
+                
+				proximo->prox = NULL;
 				
 				/*inicio = novo;
 				fim = novo;*/
                     
                 }else{
-                    anterior = head;
+                anterior = head;
                                  // NOVO HEAD
                 head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
 													   // retorna NULL caso NAO CONSIGA mALOCAR
