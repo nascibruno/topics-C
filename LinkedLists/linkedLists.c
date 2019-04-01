@@ -9,7 +9,7 @@ typedef struct list { //declara struct dentro dessa struct num e list e o pontei
                      struct list *prox; 
                      }t_list; //sinonimo para struct list
 
-
+void ClearScreen();
 void menu(void);
 void * inicInsert(t_list * inicio , int itens);
 void midInsert(t_list * inicio , int itens);
@@ -28,7 +28,7 @@ void main() {
     t_list *aux;         //ponteiro auxiliar
     t_list *anterior;    //ponteiro auxiliar
     t_list *proximo;     //ponteiro para o proximo
-    t_list *head;
+    t_list *head = NULL;
     //declara variaveis 
     int op, item, achou;
 
@@ -46,13 +46,13 @@ void main() {
 
            
             if( op == 1 ){
-            printf("Digite o valor a ser inserido.\n");
+            printf("\n\nDigite o valor a ser inserido no inicio da lista.\n");
             printf("O valor escolhido: ");
             scanf_s("%d", &item);//armazena o item a ser  inserido
-             printf("\n");
-             //printf("Teste O valor escolhido inicio: %d", inicio -> num);
-             head = inicInsert(  inicio , item);
+            printf("\n");
             
+             head = inicInsert(  head , item);//devido a funcao de imprimir precisa retornar o end de ini
+              printf("Teste O valor escolhido inicio: %d", head -> num);
                 
             }//end if 1
 
@@ -148,12 +148,12 @@ void main() {
            //tests
           
      }while(op != 6);
-    
+     printf("\n\nPrograma Encerrado.\n\n");
 }
   
 
   void menu(void){
-     
+    
     printf("\n MENU DE OPCOES \n");
     printf("\n1 - Inserir no início da lista");
     printf("\n2 - Inserir no fim da lista");
@@ -178,7 +178,7 @@ void * inicInsert(t_list * head , int itens){
     inicio = head;
     int item;
     item = itens;
-    //head = inicio;
+    
     //declara variaveis 
      
     if(inicio == NULL){
@@ -197,29 +197,29 @@ void * inicInsert(t_list * head , int itens){
                 end->prox = NULL;
                  //inicio = head ;
                 }//fim if teste malloc
-				return head;
+				return inicio;
 				
                 }else{
                     //se alista contem elementos e o novo elemento sera inserido no inic
                         //aloca nova memoria para o proximo campo TRABALHANDO COM OS ENDEREÇOS
                     
-                before = head;
+                before = inicio;
                                  // NOVO HEAD
                 head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
 													   // retorna NULL caso NAO CONSIGA mALOCAR
 						                                 //aponta para preencher a estrutura 
-			   if(head == NULL){
-                    printf("ERRO AO ALOCAR  MEMORIA NOVAMENTE\n");
-                }else{
-				next = before;
-				printf("Primeiro elemento ==>>: %d\n", item);
-				head -> num = item;	
-			    head -> prox = before;}//fim de if teste malloc
-                inicio = head; 
-                inicio->prox = before;  
-                }//fim ifelse de teste de nulidade do head
+			               if(head == NULL){
+                               printf("ERRO AO ALOCAR  MEMORIA NOVAMENTE\n");
+                                  }else{
+			                	next = before;
+				                printf("Primeiro elemento ==>>: %d\n", item);
+				                head -> num = item;	
+			                     head -> prox = before;}//fim de if teste malloc
+                                inicio = head; 
+                                inicio->prox = before;  
+                                }//fim ifelse de teste de nulidade do head
                 printf("Numero inserido no inicio da lista\n");
-                return head;
+                return inicio;
                 //printf("Teste O valor escolhido inicio: %d", inicio -> num);
 }//end funcao
 
@@ -346,14 +346,20 @@ void printList(t_list * inicio, t_list * proximo ){
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
     
-    head = inicio;
-    next = proximo;
-    //printf("num: %d\n", head->num);
-          // next->prox = NULL;
-           next = head;
+    ClearScreen();//limpa texto do terminal
 
-           while(next != NULL){
-           printf("num: %d\n", next->num);
-           next = next->prox; }//end while
-
+        next = inicio;
+    
+        printf("\n\n###########     LISTA     ##########\n\n");
+        while(next != NULL){
+        printf("| %d | -> ", next->num);
+        next = next->prox;
+           
+        }//end while
+        printf("NULL\n\n");
 }
+void ClearScreen(){
+    int n;
+    for (n = 0; n < 10; n++)
+      printf( "\n\n\n\n\n\n\n\n\n\n" );
+    }
