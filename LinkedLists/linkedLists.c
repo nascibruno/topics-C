@@ -14,8 +14,9 @@ void menu(void);
 void * inicInsert(t_list * inicio , int itens);
 void * midInsert(t_list * inicio , int itens);
 void * lastInsert(t_list * inicio , int itens);
-void printList(t_list * inicio, t_list * proximo );
-
+void  printList(t_list * inicio, t_list * proximo );
+void * apagaItem(t_list * inicio , int itens);
+void * esvaziaLista(t_list * head , int itens);
 
 void main() {
     setlocale(LC_ALL, "");
@@ -41,8 +42,8 @@ void main() {
             
             scanf_s("%d", &op);//escolhe a opção
 
-            if( op < 1 || op > 6){ //filtro
-                printf("Opção Inválida");}
+            if( op < 1 || op > 7){ //filtro
+                printf("\n\n!!!Opção Inválida!!!\n\n\a");}
 
            
             if( op == 1 ){
@@ -67,9 +68,10 @@ void main() {
               
             head = lastInsert( head ,  item);
 
-            }//end if 2
+            }/*end if 2*/
 
              if(op == 3 ){
+
             //printf("\n3 - Inserir no meio da lista");
             printf("\n\nDigite o valor a ser inserido no meio da lista.\n");
             printf("O valor escolhido: ");
@@ -79,83 +81,37 @@ void main() {
 
             }//end if 3
 
+            
             if(op == 4 ){
-                
-             printList( head , head->prox);    
-              
+
+                //deletar item
+                 printf("\n\nDigite o elemento a ser apagado =>:");
+                 scanf_s("%d",&item); 
+                 printf("\n");
+                 head = apagaItem(head , item);
+
             }//end if 4
-
-
-
-            /*
-            if(op == 4 ){
-                    if(inicio == NULL){
-                    printf("Lista Vazia ");
-                    //lista vazia 
-                   
-                }else{
-                    // a lista contem elementos e o elemento a ser removido deve ser digitado
-                 printf("\nDigite o elemento a ser apagado\n");
-                 scanf_s("%d",numero);
-                 //todas as ocorrencias da lisa, iguais ao numero digitado serao removidas
-                 aux = inicio;
-                 anterior = NULL;
-                 achou = 0;
-                 while (aux != NULL){
-                     if(aux->num == numero){
-                         //numero digitado encontrado
-                         achou = achou +1;
-                         if(aux == inicio){
-                             //numero a ser apagado é o primeiro
-                             inicio = aux->prox;
-                             delete(aux);
-                             aux=inicio;
-                         }else if(aux ==fim){
-                           // o numeor a ser removido é o ultimo da lista     
-                            anterior->prox =NULL;
-                            fim =  anterior;
-                            delete(aux);
-                            aux =NULL;
-                         }else{
-                             //o numero a ser apagado esta no meio da lista
-                            anterior->prox = aux->prox;
-                            delete(aux);
-                            aux =anterior->prox;
-                         }
-                     }else{
-                         anterior = aux;
-                         aux =aux->prox;
-                     }
-                 }
-                if(achou==0){
-                    printf("\nNumero nao encontrado\n");
-                    }else if(achou == 1){
-                        printf("\nelemento apagado 1 vez\n");
-                    }else{
-                        printf("\n elemento apagado %d vezes\n", achou);
-                    }
-                }
-            }
+            
             if(op == 5 ){
-                if(inicio == NULL){
-                    printf("Lista Vazia ");
-                    //lista vazia 
-                }else{
-                    //a lista será esvaziada
-                    aux = inicio;
-                    while(aux!= NULL){
-                        inicio = inicio ->prox;
-                        delete(aux);
-                        aux =inicio;
-                    }
-                    printf("Lista esvaziada");
-                }
-            }
-            getch();
-            */
-           //tests
+                //Esvaziar a lista
+                  
+               head = esvaziaLista( head , item);
+
+            }//end if 5
+
+            if(op == 6 ){
+
+                if(head == NULL){
+                 printf("\n\nA Lista está Vazia\n\n");
+                
+                 }  
+                 else{
+                     printList( head , head->prox); 
+                 }
+                
+            }//end if 6
           
-     }while(op != 6);
+     }while(op != 7);
      printf("\n\nPrograma Encerrado.\n\n");
 }
   
@@ -166,11 +122,10 @@ void main() {
     printf("\n1 - Inserir no início da lista");
     printf("\n2 - Inserir no fim da lista");
     printf("\n3 - Inserir no meio da lista");
-    printf("\n4 - Consultar toda a lista");
-   
-    //printf("\n4 - Remover da lista");
-   // printf("\n5 - Esvaziar a lista");
-    printf("\n6 - Sair");
+    printf("\n4 - Remover da lista");
+    printf("\n5 - Esvaziar a lista");
+    printf("\n6 - Mostrar toda a lista");
+    printf("\n7 - Sair");
     printf("\nDigite sua opcao: ");
 }
 
@@ -229,7 +184,6 @@ void * inicInsert(t_list * head , int itens){
                 return inicio;
                 //printf("Teste O valor escolhido inicio: %d", inicio -> num);
 }//end funcao
-
 
 void  * midInsert(t_list * head , int itens){
 
@@ -301,7 +255,6 @@ void  * midInsert(t_list * head , int itens){
 
 }
 
-
 void * lastInsert(t_list * head , int itens){
 
             /*typedef faz com que naao se precise digitar novamente o tipo de 
@@ -354,8 +307,107 @@ void * lastInsert(t_list * head , int itens){
 			}/*end lastInsert*/
 
 
+void * apagaItem(t_list * head , int itens){
 
-void printList(t_list * inicio, t_list * proximo ){
+
+    /*typedef faz com que naao se precise digitar novamente o tipo de 
+                           t_list identifica o ponteiro */
+    t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
+    t_list *end = NULL ; //ponteiro fim contera o ultimo elemento da lista
+    t_list *aux = NULL;         //ponteiro auxiliar
+    t_list *before;    //ponteiro auxiliar
+    t_list *next;     //ponteiro para o proximo
+    inicio = head;
+        //declara variaveis locais
+    int op, numero, achou, meio, n;
+    numero = itens;
+    meio = 0;
+    n = 0;
+                 next = head;
+				 while(next->prox != NULL){
+				next = next->prox ;
+				
+				}//end while
+                end = next->prox;//obtenho o ultimo ponteiro
+
+               if(inicio == NULL){
+                    printf("\n\nA lista está vazia!\n\n");
+                    //lista vazia 
+                   
+                }else{
+                    // a lista contem elementos e o elemento a ser removido deve ser digitado
+                 
+                 //todas as ocorrencias da lisa, iguais ao numero digitado serao removidas
+                 aux = inicio;
+                 before = NULL;
+                 achou = 0;
+                 while (aux != NULL){
+                     if(aux->num == numero){
+                         //numero digitado encontrado
+                         achou = achou +1;
+                         if(aux == inicio){
+                             //numero a ser apagado é o primeiro
+                             inicio = aux->prox;
+                             free(aux);
+                             aux=inicio;
+                         }else if(aux == end){
+                           // o numeor a ser removido é o ultimo da lista     
+                            before->prox =NULL;
+                            end =  before;
+                            free(aux);
+                            aux =NULL;
+                         }else{
+                             //o numero a ser apagado esta no meio da lista
+                            before->prox = aux->prox;
+                            free(aux);
+                            aux =before->prox;
+                         }
+
+                       
+
+                     }else{
+                         before = aux;
+                         aux =aux->prox;
+                     }
+                 }
+                if(achou==0){
+                    printf("\nNumero nao encontrado\n");
+                    }else if(achou == 1){
+                        printf("\nelemento apagado 1 vez\n");
+                    }else{
+                        printf("\n elemento apagado %d vezes\n", achou);
+                    }
+                }
+                return head;
+}
+
+void * esvaziaLista(t_list * head , int itens){
+
+     /*typedef faz com que naao se precise digitar novamente o tipo de 
+                           t_list identifica o ponteiro */
+    t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
+    t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
+    t_list *aux = NULL;         //ponteiro auxiliar
+    t_list *before;    //ponteiro auxiliar
+    t_list *next;     //ponteiro para o proximo
+    inicio = head;
+     if(inicio == NULL){
+                    printf("\n\nA Lista já está Vazia\n\n");
+                    //lista vazia 
+                }else{
+                    //a lista será esvaziada
+                    aux = inicio;
+                    while(aux!= NULL){
+                        inicio = inicio ->prox;
+                        free(aux);
+                        aux =inicio;
+                    }
+                    printf("\n\nLista Esvaziada\n\n");
+                }
+        return inicio;
+}
+
+void  printList(t_list * inicio, t_list * proximo ){
 
     t_list *head = NULL; //lista vazia, logo, ponteiro com valor NULL
     t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
@@ -366,7 +418,6 @@ void printList(t_list * inicio, t_list * proximo ){
     ClearScreen();//limpa texto do terminal
 
         next = inicio;
-    
         printf("\n\n###########     LISTA     ##########\n\n");
         while(next != NULL){
         printf("| %d | -> ", next->num);
@@ -374,9 +425,12 @@ void printList(t_list * inicio, t_list * proximo ){
            
         }//end while
         printf("NULL\n\n");
+        
 }
 void ClearScreen(){
     int n;
     for (n = 0; n < 10; n++)
       printf( "\n\n\n\n\n\n\n\n\n\n" );
     }
+
+ 
