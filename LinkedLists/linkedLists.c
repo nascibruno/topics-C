@@ -196,14 +196,14 @@ void * inicInsert(t_list * head , int itens){
 				if(inicio == NULL){
                     printf("ERRO AO ALOCAR MEMORIA\n");
                 }else{
+
 				before = NULL;
-				
-				printf("Primeiro elemento =>: %d\n", item);
-				inicio -> num = item;	    // ponteiro para num na estrutura list o primeiro e o ultimo
+                inicio -> num = item;	    // ponteiro para num na estrutura list o primeiro e o ultimo
 				end = inicio ;
                 end->prox = NULL;
                  //inicio = head ;
                 }//fim if teste malloc
+                printf("Numero inserido foi o primeiro da lista\n\n");
 				return inicio;
 				
                 }else{
@@ -218,14 +218,14 @@ void * inicInsert(t_list * head , int itens){
 			               if(head == NULL){
                                printf("ERRO AO ALOCAR  MEMORIA NOVAMENTE\n");
                                   }else{
-			                	next = before;
-				                printf("Primeiro elemento ==>>: %d\n", item);
-				                head -> num = item;	
+			                	
+                                next = before;
+				                 head -> num = item;	
 			                     head -> prox = before;}//fim de if teste malloc
                                 inicio = head; 
                                 inicio->prox = before;  
                                 }//fim ifelse de teste de nulidade do head
-                printf("Numero inserido no inicio da lista\n");
+                printf("Numero inserido no inicio da lista\n\n");
                 return inicio;
                 //printf("Teste O valor escolhido inicio: %d", inicio -> num);
 }//end funcao
@@ -237,47 +237,52 @@ void  * midInsert(t_list * head , int itens){
                            t_list identifica o ponteiro */
     t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
     t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
-    t_list *new;         //ponteiro auxiliar
+    t_list *new = NULL;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
-        //declara variaveis 
-        int op, numero, achou, meio, n;
+    inicio = head;
+        //declara variaveis locais
+    int op, numero, achou, meio, n, item;
+    item = itens;
     meio = 0;
     n = 0;
         //Reserva o endereço de espaço de memoria para o novo elemento da lista
 					   new = (t_list*) malloc(sizeof(t_list));
 					   
 
-						if(head == NULL){
-							//lista estava vazia e o elemento sera o prim e o ultimo
+						if(inicio == NULL){
+							//lista estava vazia e o elemento sera o prim, ultimo e central
 							head = (t_list*) malloc(sizeof(t_list));
-							 printf("Digite o numero a ser inserido no meio da lista =>: ");
-							 scanf("%d", &head->num);
+                            if(head == NULL){
+                             printf("ERRO AO ALOCAR MEMORIA\n");
+                                }else{
+							head->num = item;
 							next = head;
 							next->prox = NULL;
-							
+                            }//checa a allocaçao
+							printf("Numero inserido foi o primeiro da lista\n\n");
+                            return head;
+
 						}else{
-							   //a lista ja contem elementos e sera inserido no fim da lista
-							     printf("Digite o numero a ser inserido no meio da lista ==>>: ");
-							    scanf("%d", &new->num);
-							   
-							   next = head;
+							   //a lista ja contem elementos e sera inserido no meio da lista
+							    new->num= item;
+
+                            //   percorre todos os ponteiros ate achar o ultimo
+							     next = head;
 							   while(next->prox != NULL){
-							    //   percorre todos os ponteiros ate achar o ultimo
-							    next = next->prox ;
-								//printf("dentro\n");
-								n++;
-							   }
+							     next = next->prox ;
+								n++;//conta itens
+							   }//end while
 							   
 							    // quando achar  o ultimo a variavel n recebe o valor do numero de ítens
 							   meio = (int)(n / 2);
-							   
-							   next = head;
-							  for(int i = 0; i < meio ; i++){
-							  	//   percorre todos os ponteiros ate achar o meio
-							    next = next->prox ;
+
+							   //   percorre todos os ponteiros ate achar o meio
+							    next = head;
+							    for(int i = 0; i < meio ; i++){
+							  	 next = next->prox ;
 								//printf("dentro %d\n", meio);
-							  }
+							    }
 							  before = next;
 							  //aux(novo) aponta para o ponteiro que o antigo apontava
 							  new->prox = next->prox;
@@ -290,8 +295,8 @@ void  * midInsert(t_list * head , int itens){
 						}
 					
 					
-			printf("Numero inserido no meio da lista\n");
-
+			printf("Numero inserido no meio da lista\n\n");
+            return head;
 
 
 }
@@ -322,6 +327,7 @@ void * lastInsert(t_list * head , int itens){
 							    next = head;
 							    next->prox = NULL;
                                 }//fim if filtro
+                                printf("Numero inserido foi o primeiro da lista\n\n");
                                 return head;
 							
 						}else{
@@ -341,10 +347,10 @@ void * lastInsert(t_list * head , int itens){
 							   // quando achar  o ultimo a variavel auxiliar recebe esse ponteiro
 							   next->prox = new;
 							   new->prox = NULL;
-                               return head;
+                               
 						}//end if and else
-					//	printf("Numero inserido no fim da lista");
-
+						printf("Numero inserido no fim da lista\n\n");
+                        return head;
 			}/*end lastInsert*/
 
 
