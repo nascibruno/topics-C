@@ -12,13 +12,13 @@ typedef struct list { //declara struct dentro dessa struct num e list e o pontei
 void ClearScreen();
 void menu(void);
 void * inicInsert(t_list * inicio , int itens);
-void midInsert(t_list * inicio , int itens);
-void lastInsert(t_list * inicio , int itens);
+void * midInsert(t_list * inicio , int itens);
+void * lastInsert(t_list * inicio , int itens);
 void printList(t_list * inicio, t_list * proximo );
 
 
 void main() {
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "");
             //Definindo o registro
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 
@@ -51,30 +51,38 @@ void main() {
             scanf_s("%d", &item);//armazena o item a ser  inserido
             printf("\n");
             
-             head = inicInsert(  head , item);//devido a funcao de imprimir precisa retornar o end de ini
-              printf("Teste O valor escolhido inicio: %d", head -> num);
+            head = inicInsert(  head , item);//devido a funcao de imprimir precisa retornar o end de ini
+             
                 
             }//end if 1
 
 
 
             if(op == 2 ){
+           //printf("\n2 - Inserir no fim da lista");
+             printf("\n\nDigite o valor a ser inserido no fim da lista.\n");
+            printf("O valor escolhido: ");
+            scanf_s("%d", &item);//armazena o item a ser  inserido
+            printf("\n");
               
-             lastInsert( inicio ,  item);
+            head = lastInsert( head ,  item);
 
             }//end if 2
 
              if(op == 3 ){
-              
-             midInsert( inicio ,  item);
+            //printf("\n3 - Inserir no meio da lista");
+            printf("\n\nDigite o valor a ser inserido no meio da lista.\n");
+            printf("O valor escolhido: ");
+            scanf_s("%d", &item);//armazena o item a ser  inserido
+            printf("\n");
+            midInsert( head ,  item);
 
             }//end if 3
 
             if(op == 4 ){
                 
-                printList( head , head->prox);    
-                
-
+             printList( head , head->prox);    
+              
             }//end if 4
 
 
@@ -159,8 +167,7 @@ void main() {
     printf("\n2 - Inserir no fim da lista");
     printf("\n3 - Inserir no meio da lista");
     printf("\n4 - Consultar toda a lista");
-
-    
+   
     //printf("\n4 - Remover da lista");
    // printf("\n5 - Esvaziar a lista");
     printf("\n6 - Sair");
@@ -224,11 +231,11 @@ void * inicInsert(t_list * head , int itens){
 }//end funcao
 
 
-void midInsert(t_list * inicio , int itens){
+void  * midInsert(t_list * head , int itens){
 
         /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
-    t_list *head = NULL; //lista vazia, logo, ponteiro com valor NULL
+    t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
     t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
     t_list *new;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
@@ -290,47 +297,51 @@ void midInsert(t_list * inicio , int itens){
 }
 
 
-void lastInsert(t_list * inicio , int itens){
+void * lastInsert(t_list * head , int itens){
 
             /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
 
-    t_list *head = NULL; //lista vazia, logo, ponteiro com valor NULL
+    t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
     t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
-    t_list *new;         //ponteiro auxiliar
+    t_list *new = NULL;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
+    inicio = head;
+    int item;
+    item = itens;
 
-
-                        //Reserva o endereço de espaço de memoria para o ultimo elemento da lista
-					   new = (t_list*) malloc(sizeof(t_list));
-					   
-
-						if(head == NULL){
+                   //se inicio for NULL aloque novo espaço
+						if(inicio == NULL){
 							//lista estava vazia e o elemento sera o prim e o ultimo
 							head = (t_list*) malloc(sizeof(t_list));
-							 printf("(A)Digite o numero a ser inserido no fim da lista: ");
-							 scanf("%d", &head->num);
-							next = head;
-							next->prox = NULL;
+                            if(head == NULL){
+                                printf("ERRO AO ALOCAR MEMORIA\n");
+                                }else{
+							    head->num= item;
+							    next = head;
+							    next->prox = NULL;
+                                }//fim if filtro
+                                return head;
 							
 						}else{
 							   //a lista ja contem elementos e sera inserido no fim da lista
-							     printf("(B)Digite o numero a ser inserido no fim da lista: ");
-							    scanf("%d", &new->num);
+                               new = (t_list*) malloc(sizeof(t_list));
+							    new->num = item;
+
 							   next = head;
+
 							   while(next->prox != NULL){
 							    //   percorre todos os ponteiros ate achar o ultimo
-							    
-								next = next->prox ;
-								printf("dentro\n");
+							    next = next->prox ;
+								
 						
 							   }//end while
 							   
 							   // quando achar  o ultimo a variavel auxiliar recebe esse ponteiro
-							  
 							   next->prox = new;
 							   new->prox = NULL;
+                               return head;
 						}//end if and else
 					//	printf("Numero inserido no fim da lista");
 
