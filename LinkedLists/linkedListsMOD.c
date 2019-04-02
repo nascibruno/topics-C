@@ -13,8 +13,8 @@ Para o armazenamento utilize uma estrutura heterogênea de dados  */
 /*declara struct dentro dessa struct num e list e o ponteiro do 
  tipo struct list para o proximo elemento*/
 typedef struct list { 
-                     char nomeMusica; //nome da musica
-                     char nomeBanda;  //nome da Banda
+                     char nomeMusica[20]; //nome da musica
+                     char nomeBanda[20];  //nome da Banda
                      int min; //min minutos de duraçao da musica
                      struct list *prox; 
                      }t_list; //sinonimo para struct list
@@ -24,12 +24,12 @@ typedef struct list {
 
 void ClearScreen();
 void menu(void);
-void * inicInsert(t_list * head , char music, char band, int time);
-void * midInsert(t_list * head , char music, char band, int time);
-void * lastInsert(t_list * head , char music, char band, int time);
+void * inicInsert(t_list * head , char music, char band, int min);
+void * midInsert(t_list * head , char music, char band, int min);
+void * lastInsert(t_list * head , char music, char band, int min);
 void  printList(t_list * inicio, t_list * proximo );
-void * apagaItem(t_list * head , char music, char band, int time);
-void * esvaziaLista(t_list * head , char music, char band, int time);
+void * apagaItem(t_list * head , char music, char band, int min);
+void * esvaziaLista(t_list * head , char music, char band, int min);
 
 void main() {
     setlocale(LC_ALL, "");
@@ -45,8 +45,10 @@ void main() {
     t_list *head = NULL;
     //declara variaveis 
     int op, tempo, achou;
-    char musica, banda;
+    char musica[20], banda[20];
     
+
+
     do{
             
 
@@ -63,10 +65,12 @@ void main() {
             if( op == 1 ){
             printf("\n\nDigite os dados a serem inseridos no inicio da Playlist.\n");
             printf("O Nome da Musica: ");
-            scanf_s("%d", &musica);//armazena o item a ser  inserido
+            fgets(musica,sizeof(musica),stdin);
+            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
             printf("O Nome da Banda: ");
-            scanf_s("%d", &banda);//armazena o item a ser  inserido
-            printf("O valor Duração: ");
+             fgets(banda,sizeof(banda),stdin);
+            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
+            printf("O valor Duração da música (em ): ");
             scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
             printf("\n");
             
@@ -79,13 +83,14 @@ void main() {
 
             if(op == 2 ){
            //printf("\n2 - Inserir no fim da lista");
-             printf("\n\nDigite o valor a ser inserido no fim da lista.\n");
-             printf("\n\nDigite os dados a serem inseridos no inicio da Playlist.\n");
+            printf("\n\nDigite os dados a serem inseridos no fim da Playlist.\n");
             printf("O Nome da Musica: ");
-            scanf_s("%d", &musica);//armazena o item a ser  inserido
+            fgets(musica,sizeof(musica),stdin);
+            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
             printf("O Nome da Banda: ");
-            scanf_s("%d", &banda);//armazena o item a ser  inserido
-            printf("O valor Duração: ");
+             fgets(banda,sizeof(banda),stdin);
+            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
+            printf("O valor Duração da música (em ): ");
             scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
             printf("\n");
             
@@ -98,12 +103,13 @@ void main() {
 
             //printf("\n3 - Inserir no meio da lista");
             printf("\n\nDigite o valor a ser inserido no meio da lista.\n");
-            printf("\n\nDigite os dados a serem inseridos no inicio da Playlist.\n");
             printf("O Nome da Musica: ");
-            scanf_s("%d", &musica);//armazena o item a ser  inserido
+            fgets(musica,sizeof(musica),stdin);
+            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
             printf("O Nome da Banda: ");
-            scanf_s("%d", &banda);//armazena o item a ser  inserido
-            printf("O valor Duração: ");
+             fgets(banda,sizeof(banda),stdin);
+            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
+            printf("O valor Duração da música (em ): ");
             scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
             printf("\n");
             
@@ -159,7 +165,7 @@ void main() {
     printf("\nDigite sua opcao: ");
 }
 
-void * inicInsert(t_list * head , char music, char band, int time){
+void * inicInsert(t_list * head , char music, char band, int min){
        //typedef faz com que naao se precise digitar novamente o tipo de 
                            //t_list identifica o ponteiro 
     t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
@@ -168,8 +174,12 @@ void * inicInsert(t_list * head , char music, char band, int time){
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
     inicio = head;
-    int tempo;
-    tempo = time;
+    
+    int op, tempo, achou;
+    char musica, banda;
+    musica = music;
+    banda = band;
+    tempo = min;
     
     //declara variaveis 
      
@@ -183,12 +193,14 @@ void * inicInsert(t_list * head , char music, char band, int time){
                 }else{
 
 				before = NULL;
+                inicio -> nomeMusica = musica;
+                inicio -> nomeBanda = banda;
                 inicio -> min = tempo;	    // ponteiro para min na estrutura list o primeiro e o ultimo
 				end = inicio ;
                 end->prox = NULL;
                  //inicio = head ;
                 }//fim if teste malloc
-                printf("Numero inserido foi o primeiro da lista\n\n");
+                printf("Musica inserida foi é a primeira da lista\n\n");
 				return inicio;
 				
                 }else{
@@ -215,7 +227,7 @@ void * inicInsert(t_list * head , char music, char band, int time){
                 //printf("Teste O valor escolhido inicio: %d", inicio -> min);
 }//end funcao
 
-void  * midInsert(t_list * head , char music, char band, int time){
+void  * midInsert(t_list * head , char music, char band, int min){
 
         /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -227,7 +239,7 @@ void  * midInsert(t_list * head , char music, char band, int time){
     inicio = head;
         //declara variaveis locais
     int op, minutos, achou, meio, n, tempo;
-    tempo = time;
+    tempo = min;
     meio = 0;
     n = 0;
         //Reserva o endereço de espaço de memoria para o novo elemento da lista
@@ -255,7 +267,7 @@ void  * midInsert(t_list * head , char music, char band, int time){
 							     next = head;
 							   while(next->prox != NULL){
 							     next = next->prox ;
-								n++;//conta time
+								n++;//conta elementos
 							   }//end while
 							   
 							    // quando achar  o ultimo a variavel n recebe o valor do numero de ítens
@@ -285,7 +297,7 @@ void  * midInsert(t_list * head , char music, char band, int time){
 
 }
 
-void * lastInsert(t_list * head , char music, char band, int time){
+void * lastInsert(t_list * head , char music, char band, int min){
 
             /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -297,7 +309,7 @@ void * lastInsert(t_list * head , char music, char band, int time){
     t_list *next;     //ponteiro para o proximo
     inicio = head;
     int tempo;
-    tempo = time;
+    tempo = min;
 
                    //se inicio for NULL aloque novo espaço
 						if(inicio == NULL){
@@ -337,7 +349,7 @@ void * lastInsert(t_list * head , char music, char band, int time){
 			}/*end lastInsert*/
 
 
-void * apagaItem(t_list * head , char music, char band, int time){
+void * apagaItem(t_list * head , char music, char band, int min){
 
 
     /*typedef faz com que naao se precise digitar novamente o tipo de 
@@ -350,7 +362,7 @@ void * apagaItem(t_list * head , char music, char band, int time){
     inicio = head;
         //declara variaveis locais
     int op, minutos, achou, meio, n;
-    minutos = time;
+    minutos = min;
     meio = 0;
     n = 0;
                  next = head;
@@ -411,7 +423,7 @@ void * apagaItem(t_list * head , char music, char band, int time){
                 return head;
 }
 
-void * esvaziaLista(t_list * head , char music, char band, int time){
+void * esvaziaLista(t_list * head , char music, char band, int min){
 
      /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
