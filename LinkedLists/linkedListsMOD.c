@@ -24,12 +24,12 @@ typedef struct list {
 
 void ClearScreen();
 void menu(void);
-void * inicInsert(t_list * head , char music, char band, int min);
-void * midInsert(t_list * head , char music, char band, int min);
-void * lastInsert(t_list * head , char music, char band, int min);
+void * inicInsert(t_list * head , char * music, char * band, int min);
+void * midInsert(t_list * head , char * music, char *band, int min);
+void * lastInsert(t_list * head , char * music, char * band, int min);
 void  printList(t_list * inicio, t_list * proximo );
-void * apagaItem(t_list * head , char music, char band, int min);
-void * esvaziaLista(t_list * head , char music, char band, int min);
+void * apagaItem(t_list * head , char * music, char * band, int min);
+void * esvaziaLista(t_list * head);
 
 void main() {
     setlocale(LC_ALL, "");
@@ -46,7 +46,7 @@ void main() {
     //declara variaveis 
     int op, tempo, achou;
     char musica[20], banda[20];
-    
+    char num[256];//converter num em tempo
 
 
     do{
@@ -55,11 +55,16 @@ void main() {
           // menu de opções
           menu();
             //limpa tela
-            
-            scanf_s("%d", &op);//escolhe a opção
+            if (fgets(num, sizeof(num), stdin)) {
+              if (1 == sscanf(num, "%d", &op)) {
+                    if( op < 1 || op > 7) //filtro
+                        printf("\n\n!!!Opção Inválida!!!\n\n\a");
+                     }//recebe op
+                }
+           // scanf_s("%d", &op);//escolhe a opção
 
-            if( op < 1 || op > 7){ //filtro
-                printf("\n\n!!!Opção Inválida!!!\n\n\a");}
+
+           
 
            
             if( op == 1 ){
@@ -71,11 +76,15 @@ void main() {
              fgets(banda,sizeof(banda),stdin);
             //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
             printf("O valor Duração da música (em ): ");
-            scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
-            printf("\n");
+            if (fgets(num, sizeof(num), stdin)) {
+                        if (1 == sscanf(num, "%d", &tempo)) {
+                         printf("\n");
             
-            head = inicInsert( head, musica, banda, tempo );//devido a funcao de imprimir precisa retornar o end de ini
+                        head = inicInsert( head, musica, banda, tempo );//devido a funcao de imprimir precisa retornar o end de ini
              
+                        }
+                }//armazena o tempo a ser  inserido
+            
                 
             }//end if 1
 
@@ -91,11 +100,14 @@ void main() {
              fgets(banda,sizeof(banda),stdin);
             //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
             printf("O valor Duração da música (em ): ");
-            scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
-            printf("\n");
+            if (fgets(num, sizeof(num), stdin)) {
+                        if (1 == sscanf(num, "%d", &tempo)) {
+                        printf("\n");
             
-             
-            head = lastInsert( head, musica, banda, tempo );
+                         head = lastInsert( head, musica, banda, tempo );
+                        }
+                }//armazena o tempo a ser  inserido
+            
 
             }/*end if 2*/
 
@@ -109,29 +121,37 @@ void main() {
             printf("O Nome da Banda: ");
              fgets(banda,sizeof(banda),stdin);
             //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
-            printf("O valor Duração da música (em ): ");
-            scanf_s("%d", &tempo);//armazena o tempo a ser  inserido
-            printf("\n");
+            printf("O valor Duração da música (em SEG): ");
+            if (fgets(num, sizeof(num), stdin)) {
+                        if (1 == sscanf(num, "%d", &tempo)) {
+                        printf("\n");
             
-            midInsert( head, musica, banda, tempo );
+                        midInsert( head, musica, banda, tempo ); 
+                        }
+                }//armazena o tempo a ser  inserido
+            
 
             }//end if 3
 
             
             if(op == 4 ){
 
-                //deletar tempo
-                 printf("\n\nDigite o elemento a ser apagado =>:");
-                 scanf_s("%d",&tempo); 
-                 printf("\n");
-                 head = apagaItem( head, musica, banda, tempo );
+                //deletar POR nome, banda ou tempo de duração
+                 printf("\n\nDigite o elemento a ser apagado =>:");////
+                 if (fgets(num, sizeof(num), stdin)) {
+                        if (1 == sscanf(num, "%d", &tempo)) {
+                         printf("\n");
+                        head = apagaItem( head, musica, banda, tempo ); 
+                        }
+                }//armazena o tempo a ser  inserido
+                
 
             }//end if 4
             
             if(op == 5 ){
                 //Esvaziar a lista
                   
-               head = esvaziaLista( head, musica, banda, tempo );
+               head = esvaziaLista( head );
 
             }//end if 5
 
@@ -165,7 +185,7 @@ void main() {
     printf("\nDigite sua opcao: ");
 }
 
-void * inicInsert(t_list * head , char music, char band, int min){
+void * inicInsert(t_list * head , char * music, char * band, int min){
        //typedef faz com que naao se precise digitar novamente o tipo de 
                            //t_list identifica o ponteiro 
     t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
@@ -176,9 +196,22 @@ void * inicInsert(t_list * head , char music, char band, int min){
     inicio = head;
     
     int op, tempo, achou;
-    char musica, banda;
-    musica = music;
-    banda = band;
+    /*strcpy(char *dest,char *src);
+    
+   memset(dest, '\0', sizeof(dest));
+   strcpy(src, "This is tutorialspoint.com");
+   strcpy(dest, src);
+
+    sprintf(student_mark.passfail,"DISTINCTION\n");
+    */
+    char musica[20], banda[20];
+    memset(musica, '\0', sizeof(musica));
+    
+    memset(banda, '\0', sizeof(banda));
+    strcpy(musica,music);
+    strcpy(banda,band);
+   // musica = music;
+    //banda = band;
     tempo = min;
     
     //declara variaveis 
@@ -188,46 +221,57 @@ void * inicInsert(t_list * head , char music, char band, int min){
 				inicio = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
 													   // retorna NULL caso NAO CONSIGA mALOCAR
 						  //aponta para preencher a estrutura 
-				if(inicio == NULL){
-                    printf("ERRO AO ALOCAR MEMORIA\n");
-                }else{
+			        	if(inicio == NULL){
+                            printf("ERRO AO ALOCAR MEMORIA\n");
+                          }else{
 
-				before = NULL;
-                inicio -> nomeMusica = musica;
-                inicio -> nomeBanda = banda;
-                inicio -> min = tempo;	    // ponteiro para min na estrutura list o primeiro e o ultimo
-				end = inicio ;
-                end->prox = NULL;
-                 //inicio = head ;
-                }//fim if teste malloc
-                printf("Musica inserida foi é a primeira da lista\n\n");
-				return inicio;
+			            	before = NULL;
+			            	
+			            	strcpy(inicio -> nomeMusica,musica);
+                            strcpy(inicio -> nomeBanda,banda);
+                            inicio -> min = tempo;	    // ponteiro para min na estrutura list o primeiro e o ultimo
+                            
+			            	end = inicio ;
+                              end->prox = NULL;
+                              //inicio = head ;
+                        }//fim if teste malloc
+                          printf("Musica inserida foi a primeira da lista\n\n");
+			        	return inicio;
 				
                 }else{
                     //se alista contem elementos e o novo elemento sera inserido no inic
                         //aloca nova memoria para o proximo campo TRABALHANDO COM OS ENDEREÇOS
                     
-                before = inicio;
+                            before = inicio;
                                  // NOVO HEAD
-                head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
+                            head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
 													   // retorna NULL caso NAO CONSIGA mALOCAR
 						                                 //aponta para preencher a estrutura 
 			               if(head == NULL){
                                printf("ERRO AO ALOCAR  MEMORIA NOVAMENTE\n");
                                   }else{
 			                	
-                                next = before;
-				                 head -> min = tempo;	
-			                     head -> prox = before;}//fim de if teste malloc
+                                     next = before;
+                                	strcpy(inicio -> nomeMusica,musica);
+                                    strcpy(inicio -> nomeBanda,banda);
+                
+				                     head -> min = tempo;	
+			                        head -> prox = before;
+                                      
+                                  }//fim de if teste malloc
+                                  
                                 inicio = head; 
-                                inicio->prox = before;  
+                                inicio->prox = before; 
+                                
                                 }//fim ifelse de teste de nulidade do head
-                printf("Numero inserido no inicio da lista\n\n");
+                                
+                printf("Música inserida no inicio da lista\n\n");
                 return inicio;
-                //printf("Teste O valor escolhido inicio: %d", inicio -> min);
-}//end funcao
+              
+             
+        }//end funcao
 
-void  * midInsert(t_list * head , char music, char band, int min){
+void  * midInsert(t_list * head , char * music, char * band, int min){
 
         /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -242,6 +286,16 @@ void  * midInsert(t_list * head , char music, char band, int min){
     tempo = min;
     meio = 0;
     n = 0;
+     char musica[20], banda[20];
+    memset(musica, '\0', sizeof(musica));
+    strcpy(musica,music);
+   memset(banda, '\0', sizeof(banda));
+    strcpy(banda,band);
+   // musica = music;
+    //banda = band;
+    tempo = min;
+    
+    
         //Reserva o endereço de espaço de memoria para o novo elemento da lista
 					   new = (t_list*) malloc(sizeof(t_list));
 					   
@@ -252,6 +306,10 @@ void  * midInsert(t_list * head , char music, char band, int min){
                             if(head == NULL){
                              printf("ERRO AO ALOCAR MEMORIA\n");
                                 }else{
+                                    
+                            strcpy(inicio -> nomeMusica,musica);
+                            strcpy(inicio -> nomeBanda,banda);        
+                                    
 							head->min = tempo;
 							next = head;
 							next->prox = NULL;
@@ -267,7 +325,7 @@ void  * midInsert(t_list * head , char music, char band, int min){
 							     next = head;
 							   while(next->prox != NULL){
 							     next = next->prox ;
-								n++;//conta elementos
+							    	n++;//conta elementos
 							   }//end while
 							   
 							    // quando achar  o ultimo a variavel n recebe o valor do numero de ítens
@@ -279,6 +337,7 @@ void  * midInsert(t_list * head , char music, char band, int min){
 							  	 next = next->prox ;
 								//printf("dentro %d\n", meio);
 							    }
+							    
 							  before = next;
 							  //aux(novo) aponta para o ponteiro que o antigo apontava
 							  new->prox = next->prox;
@@ -297,7 +356,7 @@ void  * midInsert(t_list * head , char music, char band, int min){
 
 }
 
-void * lastInsert(t_list * head , char music, char band, int min){
+void * lastInsert(t_list * head , char * music, char * band, int min){
 
             /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -309,6 +368,13 @@ void * lastInsert(t_list * head , char music, char band, int min){
     t_list *next;     //ponteiro para o proximo
     inicio = head;
     int tempo;
+     char musica[20], banda[20];
+   // memset(musica, '\0', sizeof(musica));
+    strcpy(musica,music);
+   // memset(banda, '\0', sizeof(banda));
+    strcpy(banda,band);
+   // musica = music;
+    //banda = band;
     tempo = min;
 
                    //se inicio for NULL aloque novo espaço
@@ -318,6 +384,8 @@ void * lastInsert(t_list * head , char music, char band, int min){
                             if(head == NULL){
                                 printf("ERRO AO ALOCAR MEMORIA\n");
                                 }else{
+                                strcpy(inicio -> nomeMusica,musica);
+                                strcpy(inicio -> nomeBanda,banda);
 							    head->min= tempo;
 							    next = head;
 							    next->prox = NULL;
@@ -328,6 +396,9 @@ void * lastInsert(t_list * head , char music, char band, int min){
 						}else{
 							   //a lista ja contem elementos e sera inserido no fim da lista
                                new = (t_list*) malloc(sizeof(t_list));
+                               //add struct
+                               	strcpy(new -> nomeMusica,musica);
+                                strcpy(new -> nomeBanda,banda);
 							    new->min = tempo;
 
 							   next = head;
@@ -349,7 +420,7 @@ void * lastInsert(t_list * head , char music, char band, int min){
 			}/*end lastInsert*/
 
 
-void * apagaItem(t_list * head , char music, char band, int min){
+void * apagaItem(t_list * head , char * music, char * band, int min){
 
 
     /*typedef faz com que naao se precise digitar novamente o tipo de 
@@ -423,7 +494,7 @@ void * apagaItem(t_list * head , char music, char band, int min){
                 return head;
 }
 
-void * esvaziaLista(t_list * head , char music, char band, int min){
+void * esvaziaLista(t_list * head){
 
      /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -456,17 +527,42 @@ void  printList(t_list * inicio, t_list * proximo ){
     t_list *new;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
+    int h,m,s;
+    int segundos;
+    s=0;m=0;h=0;segundos=0;//inicializando as variaveis
+    char linha[100];
     
-    ClearScreen();//limpa texto do terminal
+   ClearScreen();//limpa texto do terminal
 
         next = inicio;
-        printf("\n\n###########     LISTA     ##########\n\n");
+        printf("\n\n|###########     PLAYLIST     ##########|\n\n");
+          printf("\n|  MUSICA - BANDA               TEMPO      \n");
         while(next != NULL){
-        printf("| %d | -> ", next->min);
-        next = next->prox;
+            segundos = next -> min;
+            
+            if(segundos<3600){
+                s=segundos%60;
+                m=(int)segundos/60;
+                h=(int)m/60;
+               // linha[100] = {(next->nomeMusica)" - "(next->nomeBanda)};
+                printf("|\r   %s - %s                          %d min:%d seg  |\n",next->nomeMusica, next->nomeBanda , m, s);
+                fflush(stdout);
+            next = next->prox;
+            }else{
+                segundos = next -> min;
+                s=segundos%60;
+                m=(int)segundos/60;
+                h=(int)m/60;
+            printf("|   %s - %s                         %d h:%d min:%d seg  |\n",next->nomeMusica ,next->nomeBanda , h,m,s);
+                next = next->prox;
+            }
            
         }//end while
-        printf("NULL\n\n");
+        printf("\n|###########     PLAYLIST     ##########|\n\n");
+
+        
+        
+         
         
 }
 void ClearScreen(){
