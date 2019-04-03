@@ -13,3 +13,5 @@ path.txt
 *.exe
 *.obj
 
+path.txt
+*.txt
