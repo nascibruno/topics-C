@@ -8,13 +8,15 @@
 /* Deve-se armazenar o nome de cada música, do artista/banda e a duração da faixa. 
 Para o armazenamento utilize uma estrutura heterogênea de dados  */
 
-
+#define tamMusica 200
+#define tamBanda 200
+#define tamTempo 16
 
 /*declara struct dentro dessa struct num e list e o ponteiro do 
  tipo struct list para o proximo elemento*/
 typedef struct list { 
-                     char nomeMusica[20]; //nome da musica
-                     char nomeBanda[20];  //nome da Banda
+                     char nomeMusica[tamMusica]; //nome da musica
+                     char nomeBanda[tamBanda];  //nome da Banda
                      int min; //min minutos de duraçao da musica
                      struct list *prox; 
                      }t_list; //sinonimo para struct list
@@ -32,7 +34,7 @@ void * apagaItem(t_list * head , char * music, char * band, int min);
 void * esvaziaLista(t_list * head);
 
 void main() {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "portuguese");
             //Definindo o registro
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 
@@ -45,8 +47,8 @@ void main() {
     t_list *head = NULL;
     //declara variaveis 
     int op, tempo, achou;
-    char musica[20], banda[20];
-    char num[256];//converter num em tempo
+    char musica[tamMusica], banda[tamBanda];
+    char num[tamTempo];//converter num em tempo
 
 
     do{
@@ -70,12 +72,15 @@ void main() {
             if( op == 1 ){
             printf("\n\nDigite os dados a serem inseridos no inicio da Playlist.\n");
             printf("O Nome da Musica: ");
-            fgets(musica,sizeof(musica),stdin);
-            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
+           fflush(stdin);
+            if (fgets(musica, sizeof(musica), stdin)) //armazena o nome da musica a ser  inserida
+            musica[strlen(musica)-1]='\0';
             printf("O Nome da Banda: ");
-             fgets(banda,sizeof(banda),stdin);
-            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
+            fflush(stdin);
+            if (fgets(banda, sizeof(banda), stdin)) //armazena o nome da bnda a ser  inserida
+            banda[strlen(banda)-1]='\0';
             printf("O valor Duração da música (em ): ");
+            fflush(stdin);
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
                          printf("\n");
@@ -204,7 +209,7 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
 
     sprintf(student_mark.passfail,"DISTINCTION\n");
     */
-    char musica[20], banda[20];
+    char musica[tamMusica], banda[tamBanda];
     memset(musica, '\0', sizeof(musica));
     
     memset(banda, '\0', sizeof(banda));
@@ -286,7 +291,7 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
     tempo = min;
     meio = 0;
     n = 0;
-     char musica[20], banda[20];
+     char musica[tamMusica], banda[tamBanda];
     memset(musica, '\0', sizeof(musica));
     strcpy(musica,music);
    memset(banda, '\0', sizeof(banda));
@@ -368,7 +373,7 @@ void * lastInsert(t_list * head , char * music, char * band, int min){
     t_list *next;     //ponteiro para o proximo
     inicio = head;
     int tempo;
-     char musica[20], banda[20];
+     char musica[tamMusica], banda[tamBanda];
    // memset(musica, '\0', sizeof(musica));
     strcpy(musica,music);
    // memset(banda, '\0', sizeof(banda));
@@ -535,8 +540,8 @@ void  printList(t_list * inicio, t_list * proximo ){
    ClearScreen();//limpa texto do terminal
 
         next = inicio;
-        printf("\n\n|###########     PLAYLIST     ##########|\n\n");
-          printf("\n|  MUSICA - BANDA               TEMPO      \n");
+       printf("\n|########################################      PLAYLIST      ########################################|\n\n");
+          printf("\n|       MUSICA      -       BANDA                                           TEMPO                 |\n");
         while(next != NULL){
             segundos = next -> min;
             
@@ -544,21 +549,22 @@ void  printList(t_list * inicio, t_list * proximo ){
                 s=segundos%60;
                 m=(int)segundos/60;
                 h=(int)m/60;
-               // linha[100] = {(next->nomeMusica)" - "(next->nomeBanda)};
-                printf("|\r   %s - %s                          %d min:%d seg  |\n",next->nomeMusica, next->nomeBanda , m, s);
                 fflush(stdout);
+                printf("|   %.*s - %.*s                              %d min:%d seg  |\n",30,next->nomeMusica,30, next->nomeBanda , m, s);
+               
             next = next->prox;
             }else{
                 segundos = next -> min;
                 s=segundos%60;
                 m=(int)segundos/60;
                 h=(int)m/60;
-            printf("|   %s - %s                         %d h:%d min:%d seg  |\n",next->nomeMusica ,next->nomeBanda , h,m,s);
+                 fflush(stdout);
+                printf("|   %.*s - %.*s                              %d h:%d min:%d seg  |\n",30,next->nomeMusica,30, next->nomeBanda , h,m,s);
                 next = next->prox;
             }
            
         }//end while
-        printf("\n|###########     PLAYLIST     ##########|\n\n");
+        printf("\n|########################################     PLAYLIST     ########################################|\n\n");
 
         
         
