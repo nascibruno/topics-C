@@ -148,7 +148,7 @@ void main() {
                         if (1 == sscanf(num, "%d", &tempo)) {
                         printf("\n");
             
-                        midInsert( head, musica, banda, tempo ); 
+                        head = midInsert( head, musica, banda, tempo ); 
                         }
                 }//armazena o tempo a ser  inserido
             
@@ -328,6 +328,8 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
              
         }//end funcao
 
+
+
 void  * midInsert(t_list * head , char * music, char * band, int min){
 
         /*typedef faz com que naao se precise digitar novamente o tipo de 
@@ -339,8 +341,8 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
     t_list *next;     //ponteiro para o proximo
     inicio = head;
         //declara variaveis locais
-    int op, minutos, achou, meio, n, tempo;
-    tempo = min;
+    int op, segundos, achou, meio, n;
+    segundos = min;
     meio = 0;
     n = 0;
 
@@ -352,7 +354,7 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
     strcpy(musica,music);
     strcpy(banda,band);
 
-    tempo = min;
+    
     
     
         //Reserva o endereço de espaço de memoria para o novo elemento da lista
@@ -369,13 +371,13 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
                                      strcpy(inicio -> nomeMusica,musica);
                                      strcpy(inicio -> nomeBanda,banda);        
                                     
-							        head->min = tempo;
-							        next = head;
+							        inicio->min = segundos;
+							        next = inicio;
 							        next->prox = NULL;
                                  }//checa a allocaçao
 
 							printf("Numero inserido com sucesso. Não havia ítens na lista.\n\n");
-                            return head;
+                            return inicio;
 
 						}else{
 							   //a lista ja contem elementos e sera inserido no meio da lista
@@ -383,7 +385,7 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
                                 strcpy(new -> nomeMusica,musica);
                                 strcpy(new -> nomeBanda,banda);
                                 
-                                new->min= tempo;
+                                new->min= segundos;
 
                             //   percorre todos os ponteiros ate achar o ultimo
 							     next = head;
@@ -399,7 +401,7 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
 							    next = head;
 							    for(int i = 0; i < meio ; i++){
 							  	 next = next->prox ;
-								//printf("dentro %d\n", meio);
+								printf("dentro %d\n", meio);
 							    }
 							    
 							  before = next;
