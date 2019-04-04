@@ -157,12 +157,12 @@ void main() {
 
             
             if(op == 4 ){
-                system("cls");
+                
                  // APAGA ITENS DA LISTA
             
             //limpa tela
                 do{
-                 
+                 system("cls");
 
                     if (head == NULL){
                           printf("\n\n!!!Lista VAZIA!!!\n\n\a");
@@ -589,13 +589,14 @@ void * apagaItem(t_list * head , int erase){
                       
                             }
                         }
-                        //opcao = -1;
+                        
                             break;
 ///////////////////////////
 
 
                         case 3:
                         {    
+                               
                                 printf("Musicas com tempo maior que o digitado(em segundos) será apagado: \n"); 
                                 if (fgets(num, sizeof(num), stdin)) 
                                  if (1 == sscanf(num, "%d", &segundos)) 
@@ -644,7 +645,7 @@ void * apagaItem(t_list * head , int erase){
                                  }
                         
                         }
-                        opcao = -1;
+                        
                             break;
 
 /////////////////////////////
@@ -702,7 +703,7 @@ void * apagaItem(t_list * head , int erase){
                             }
                     }
                            
-                            opcao = -1;
+                            
                             break;
 
 ///////////////////////////
@@ -711,14 +712,16 @@ void * apagaItem(t_list * head , int erase){
                                  aux = inicio;
                                  before = NULL;
                                  achou = 0;
-                            while (aux != NULL){
-                      
-            
+
                                 printf("O Nome da Banda que deseja apagar: "); 
                                  fflush(stdin);// limpa o buffer para entrada
                                  fgets(apagabanda,sizeof(apagabanda),stdin);{ //armazena o nome da bnda a ser  inserida
                                  apagabanda[strlen(apagabanda)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
                             
+
+                            while (aux != NULL){
+                      
+            
                                  if(0 == strcmp(aux->nomeBanda,apagabanda)){ //compara as strings e retorna 0 se forem iguais ignorando CASE SENSITIVE
                                  //minutos digitado encontrado
                                     achou = achou +1;
@@ -757,7 +760,7 @@ void * apagaItem(t_list * head , int erase){
                                 break;
                                 }
                         
-                        opcao = -1;
+                        
                         break;
                     }
                          default:
