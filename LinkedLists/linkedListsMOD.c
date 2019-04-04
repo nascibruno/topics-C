@@ -26,15 +26,17 @@ typedef struct list {
 
 void ClearScreen();
 void menu(void);
+void menuApaga(void);
 void * inicInsert(t_list * head , char * music, char * band, int min);
 void * midInsert(t_list * head , char * music, char *band, int min);
 void * lastInsert(t_list * head , char * music, char * band, int min);
 void  printList(t_list * inicio, t_list * proximo );
-void * apagaItem(t_list * head , char * music, char * band, int min);
+void * apagaItem(t_list * head , int erase);
 void * esvaziaLista(t_list * head);
 
 void main() {
-    setlocale(LC_ALL, "portuguese");
+    system("cls");
+    setlocale(LC_ALL, "Portuguese");
             //Definindo o registro
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 
@@ -46,7 +48,7 @@ void main() {
     t_list *proximo;     //ponteiro para o proximo
     t_list *head = NULL;
     //declara variaveis 
-    int op, tempo, achou;
+    int op,apaga, tempo, achou;
     char musica[tamMusica], banda[tamBanda];
     char num[tamTempo];//converter num em tempo
 
@@ -57,29 +59,35 @@ void main() {
           // menu de opções
           menu();
             //limpa tela
+             fflush(stdin);
             if (fgets(num, sizeof(num), stdin)) {
               if (1 == sscanf(num, "%d", &op)) {
                     if( op < 1 || op > 7) //filtro
                         printf("\n\n!!!Opção Inválida!!!\n\n\a");
                      }//recebe op
                 }
-           // scanf_s("%d", &op);//escolhe a opção
-
-
            
-
            
             if( op == 1 ){
+            system("cls");
             printf("\n\nDigite os dados a serem inseridos no inicio da Playlist.\n");
             printf("O Nome da Musica: ");
-           fflush(stdin);
-            if (fgets(musica, sizeof(musica), stdin)) //armazena o nome da musica a ser  inserida
-            musica[strlen(musica)-1]='\0';
-            printf("O Nome da Banda: ");
+            
             fflush(stdin);
-            if (fgets(banda, sizeof(banda), stdin)) //armazena o nome da bnda a ser  inserida
-            banda[strlen(banda)-1]='\0';
-            printf("O valor Duração da música (em ): ");
+            if (fgets(musica, sizeof(musica), stdin)){
+                 //armazena o nome da musica a ser  inserida
+                musica[strlen(musica)-1]='\0';//caractere anterior fecha a string e evita que fgets pule uma linha
+                 //printf("O valor de strlen : %d\n",strlen(musica));//teste de valores
+                 // printf("O valor de musica : %s\n",musica);
+                }
+            
+            printf("O Nome da Banda: ");
+
+            fflush(stdin);
+            if (fgets(banda, sizeof(banda), stdin)){ //armazena o nome da bnda a ser  inserida
+            banda[strlen(banda)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
+
+            printf("O valor Duração da música (em Segundos): ");
             fflush(stdin);
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
@@ -93,18 +101,22 @@ void main() {
                 
             }//end if 1
 
-
-
             if(op == 2 ){
+                system("cls");
            //printf("\n2 - Inserir no fim da lista");
             printf("\n\nDigite os dados a serem inseridos no fim da Playlist.\n");
-            printf("O Nome da Musica: ");
-            fgets(musica,sizeof(musica),stdin);
-            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
+
+            printf("O Nome da Musica: "); 
+            fflush(stdin);// limpa o buffer para entrada
+            if(fgets(musica,sizeof(musica),stdin)){ //armazena o nome da bnda a ser  inserida
+            musica[strlen(musica)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
+
             printf("O Nome da Banda: ");
-             fgets(banda,sizeof(banda),stdin);
-            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
-            printf("O valor Duração da música (em ): ");
+            fflush(stdin);
+             if(fgets(banda,sizeof(banda),stdin)){ //armazena o nome da bnda a ser  inserida
+            banda[strlen(banda)-1]='\0';}
+
+            printf("O valor Duração da música (em Segundos ): ");
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
                         printf("\n");
@@ -117,16 +129,21 @@ void main() {
             }/*end if 2*/
 
              if(op == 3 ){
-
+                    system("cls");
             //printf("\n3 - Inserir no meio da lista");
             printf("\n\nDigite o valor a ser inserido no meio da lista.\n");
-            printf("O Nome da Musica: ");
-            fgets(musica,sizeof(musica),stdin);
-            //scanf_s("%s", &musica[20]);//armazena o item a ser  inserido
+
+            printf("O Nome da Musica: "); 
+            fflush(stdin);// limpa o buffer para entrada
+            fgets(musica,sizeof(musica),stdin);{ //armazena o nome da bnda a ser  inserida
+            musica[strlen(musica)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
+
             printf("O Nome da Banda: ");
-             fgets(banda,sizeof(banda),stdin);
-            //scanf_s("%s", &banda[20]);//armazena o item a ser  inserido
-            printf("O valor Duração da música (em SEG): ");
+            fflush(stdin);
+             if(fgets(banda,sizeof(banda),stdin)){ //armazena o nome da bnda a ser  inserida
+            banda[strlen(banda)-1]='\0';}
+
+            printf("O valor Duração da música (em Segundos): ");
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
                         printf("\n");
@@ -140,28 +157,49 @@ void main() {
 
             
             if(op == 4 ){
+                system("cls");
+                 // APAGA ITENS DA LISTA
+            
+            //limpa tela
+                do{
+                 
 
-                //deletar POR nome, banda ou tempo de duração
-                 printf("\n\nDigite o elemento a ser apagado =>:");////
-                 if (fgets(num, sizeof(num), stdin)) {
-                        if (1 == sscanf(num, "%d", &tempo)) {
-                         printf("\n");
-                        head = apagaItem( head, musica, banda, tempo ); 
-                        }
-                }//armazena o tempo a ser  inserido
-                
+                    if (head == NULL){
+                          printf("\n\n!!!Lista VAZIA!!!\n\n\a");
+                        apaga=5;
+                        }else{
+
+                         printList( head , head->prox);
+                         menuApaga();
+                         
+
+                             if (fgets(num, sizeof(num), stdin)) {
+                                    if (1 == sscanf(num, "%d", &apaga)) {//recebe op
+                                         if( apaga < 1 || apaga > 5){ //filtro
+                                             printf("\n\n!!!Opção Inválida!!!\n\n\a");
+                                         }else{
+                                             head = apagaItem(head ,  apaga);
+                                             }
+                                     }//converte string em int
+                                }//leitura de string do teclado
+
+                    }////deletar POR nome, banda ou tempo de duração
+
+
+                 
+                }while(apaga != 5);
 
             }//end if 4
             
             if(op == 5 ){
                 //Esvaziar a lista
-                  
+               system("cls"); 
                head = esvaziaLista( head );
 
             }//end if 5
 
             if(op == 6 ){
-
+                system("cls");
                 if(head == NULL){
                  printf("\n\nA Lista está Vazia\n\n");
                 
@@ -178,17 +216,33 @@ void main() {
   
 
   void menu(void){
-    
+    //  system("cls");
+    //ClearScreen();
     printf("\n MENU DE OPCOES \n");
-    printf("\n1 - Inserir no início da lista");
+    printf("\n\n1 - Inserir no início da lista");
     printf("\n2 - Inserir no fim da lista");
     printf("\n3 - Inserir no meio da lista");
     printf("\n4 - Remover da lista");
     printf("\n5 - Esvaziar a lista");
     printf("\n6 - Mostrar toda a lista");
     printf("\n7 - Sair");
-    printf("\nDigite sua opcao: ");
+    printf("\n\nDigite sua opcao: ");
 }
+
+void menuApaga(void){
+                
+                
+                printf("\nQual apagar:");
+                printf("\n\n1 - Por nome da musica.");
+                printf("\n2 - Por nome da banda.");
+                printf("\n3 - Por tempo maior que:");
+                printf("\n4 - Por tempo menor que:");
+                printf("\n5 - Sair");
+                printf("\n\nDigite sua opcao: ");
+
+}
+
+
 
 void * inicInsert(t_list * head , char * music, char * band, int min){
        //typedef faz com que naao se precise digitar novamente o tipo de 
@@ -198,10 +252,10 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
     //t_list *aux;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
-    inicio = head;
+    inicio = head;  //recebe o head
     
     int op, tempo, achou;
-    /*strcpy(char *dest,char *src);
+    /*strcpy(char *dest,char *src); // tratamento de stringgs
     
    memset(dest, '\0', sizeof(dest));
    strcpy(src, "This is tutorialspoint.com");
@@ -211,12 +265,10 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
     */
     char musica[tamMusica], banda[tamBanda];
     memset(musica, '\0', sizeof(musica));
-    
     memset(banda, '\0', sizeof(banda));
     strcpy(musica,music);
     strcpy(banda,band);
-   // musica = music;
-    //banda = band;
+   
     tempo = min;
     
     //declara variaveis 
@@ -238,9 +290,9 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
                             
 			            	end = inicio ;
                               end->prox = NULL;
-                              //inicio = head ;
+                              
                         }//fim if teste malloc
-                          printf("Musica inserida foi a primeira da lista\n\n");
+                          printf("Musica inserida foi a primeira da lista. Não havia ítens na lista.\n\n");
 			        	return inicio;
 				
                 }else{
@@ -257,8 +309,8 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
                                   }else{
 			                	
                                      next = before;
-                                	strcpy(inicio -> nomeMusica,musica);
-                                    strcpy(inicio -> nomeBanda,banda);
+                                	strcpy(head -> nomeMusica,musica);
+                                    strcpy(head -> nomeBanda,banda);
                 
 				                     head -> min = tempo;	
 			                        head -> prox = before;
@@ -291,13 +343,15 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
     tempo = min;
     meio = 0;
     n = 0;
+
+
+
      char musica[tamMusica], banda[tamBanda];
     memset(musica, '\0', sizeof(musica));
+    memset(banda, '\0', sizeof(banda));
     strcpy(musica,music);
-   memset(banda, '\0', sizeof(banda));
     strcpy(banda,band);
-   // musica = music;
-    //banda = band;
+
     tempo = min;
     
     
@@ -307,24 +361,29 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
 
 						if(inicio == NULL){
 							//lista estava vazia e o elemento sera o prim, ultimo e central
-							head = (t_list*) malloc(sizeof(t_list));
+							head = new;
                             if(head == NULL){
                              printf("ERRO AO ALOCAR MEMORIA\n");
                                 }else{
                                     
-                            strcpy(inicio -> nomeMusica,musica);
-                            strcpy(inicio -> nomeBanda,banda);        
+                                     strcpy(inicio -> nomeMusica,musica);
+                                     strcpy(inicio -> nomeBanda,banda);        
                                     
-							head->min = tempo;
-							next = head;
-							next->prox = NULL;
-                            }//checa a allocaçao
-							printf("Numero inserido foi o primeiro da lista\n\n");
+							        head->min = tempo;
+							        next = head;
+							        next->prox = NULL;
+                                 }//checa a allocaçao
+
+							printf("Numero inserido com sucesso. Não havia ítens na lista.\n\n");
                             return head;
 
 						}else{
 							   //a lista ja contem elementos e sera inserido no meio da lista
-							    new->min= tempo;
+							    
+                                strcpy(new -> nomeMusica,musica);
+                                strcpy(new -> nomeBanda,banda);
+                                
+                                new->min= tempo;
 
                             //   percorre todos os ponteiros ate achar o ultimo
 							     next = head;
@@ -373,13 +432,14 @@ void * lastInsert(t_list * head , char * music, char * band, int min){
     t_list *next;     //ponteiro para o proximo
     inicio = head;
     int tempo;
+
+
      char musica[tamMusica], banda[tamBanda];
-   // memset(musica, '\0', sizeof(musica));
+    memset(musica, '\0', sizeof(musica));
+    memset(banda, '\0', sizeof(banda));
     strcpy(musica,music);
-   // memset(banda, '\0', sizeof(banda));
     strcpy(banda,band);
-   // musica = music;
-    //banda = band;
+   
     tempo = min;
 
                    //se inicio for NULL aloque novo espaço
@@ -395,7 +455,7 @@ void * lastInsert(t_list * head , char * music, char * band, int min){
 							    next = head;
 							    next->prox = NULL;
                                 }//fim if filtro
-                                printf("Numero inserido foi o primeiro da lista\n\n");
+                                printf("Numero inserido foi no final da lista. Não havia ítens na lista.\n\n");
                                 return head;
 							
 						}else{
@@ -420,33 +480,46 @@ void * lastInsert(t_list * head , char * music, char * band, int min){
 							   new->prox = NULL;
                                
 						}//end if and else
-						printf("Numero inserido no fim da lista\n\n");
+						printf("Numero inserido no final da lista\n\n");
                         return head;
 			}/*end lastInsert*/
 
 
-void * apagaItem(t_list * head , char * music, char * band, int min){
+void * apagaItem(t_list * head , int erase){
 
 
     /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
     t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
-    t_list *end = NULL ; //ponteiro fim contera o ultimo elemento da lista
+    t_list *end = NULL ; //inicializa o ponteiro fim contera o ultimo elemento da lista
     t_list *aux = NULL;         //ponteiro auxiliar
     t_list *before;    //ponteiro auxiliar
     t_list *next;     //ponteiro para o proximo
-    inicio = head;
+
+    inicio = head;      //recebe o head
         //declara variaveis locais
-    int op, minutos, achou, meio, n;
-    minutos = min;
+    int op, segundos, achou, meio, n, opcao;
+     char musica[tamMusica], banda[tamBanda];
+     char apagamusica[tamMusica], apagabanda[tamBanda],  num[tamTempo];
+     /*
+    memset(musica, '\0', sizeof(musica));
+    memset(banda, '\0', sizeof(banda));
+    strcpy(musica,music);
+    strcpy(banda,band);*/
+
+    
+    segundos = 0;
     meio = 0;
     n = 0;
+    opcao = erase;
+                        
+
+
                  next = head;
 				 while(next->prox != NULL){
 				next = next->prox ;
-				
 				}//end while
-                end = next->prox;//obtenho o ultimo ponteiro
+                end = next->prox;//obtenho o ponteiro para o ultimo
 
                if(inicio == NULL){
                     printf("\n\nA lista está vazia!\n\n");
@@ -455,48 +528,242 @@ void * apagaItem(t_list * head , char * music, char * band, int min){
                 }else{
                     // a lista contem elementos e o elemento a ser removido deve ser digitado
                  
-                 //todas as ocorrencias da lisa, iguais ao minutos digitado serao removidas
-                 aux = inicio;
-                 before = NULL;
-                 achou = 0;
-                 while (aux != NULL){
-                     if(aux->min == minutos){
-                         //minutos digitado encontrado
-                         achou = achou +1;
-                         if(aux == inicio){
-                             //numero a ser apagado é o primeiro
-                             inicio = aux->prox;
-                             free(aux);
-                             aux=inicio;
-                         }else if(aux == end){
-                           // o numeor a ser removido é o ultimo da lista     
-                            before->prox =NULL;
-                            end =  before;
-                            free(aux);
-                            aux =NULL;
-                         }else{
-                             //o numero a ser apagado esta no meio da lista
-                            before->prox = aux->prox;
-                            free(aux);
-                            aux =before->prox;
-                         }
+                 //todas as ocorrencias da lista, iguais ao minutos digitado serao removidas
+                    switch (opcao)
+                    {
+/////////////////////                        
+                        case 1:
+                        {
+                                //por NOME
+                              aux = inicio;
+                             before = NULL;
+                             achou = 0;
 
-                       
+                            printf("O Nome da Musica que deseja apagar: "); 
+                            fflush(stdin);// limpa o buffer para entrada
+                            fgets(apagamusica,sizeof(apagamusica),stdin);{ //armazena o nome da bnda a ser  inserida
+                             apagamusica[strlen(apagamusica)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
 
-                     }else{
-                         before = aux;
-                         aux =aux->prox;
-                     }
-                 }
-                if(achou==0){
-                    printf("\nNumero nao encontrado\n");
-                    }else if(achou == 1){
-                        printf("\nelemento apagado 1 vez\n");
-                    }else{
-                        printf("\n elemento apagado %d vezes\n", achou);
+
+                             while (aux != NULL){
+                      
+                                if(0 == strcmp(aux->nomeMusica,apagamusica)){ //compara as strings e retorna 0 se forem iguais ignorando CASE SENSITIVE
+                                            //minutos digitado encontrado
+                                              achou = achou +1;
+                                         if(aux == inicio){
+                                         //numero a ser apagado é o primeiro
+                                             inicio = aux->prox;
+                                             free(aux);
+                                             aux=inicio;
+                                             }else if(aux == end){
+                                                // o numeor a ser removido é o ultimo da lista     
+                                                before->prox =NULL;
+                                                  end =  before;
+                                                  free(aux);
+                                                 aux =NULL;
+                                            }else{
+                                                //o numero a ser apagado esta no meio da lista
+                                                 before->prox = aux->prox;
+                                                free(aux);
+                                               aux =before->prox;
+                                              }
+                                 }else{
+                                    before = aux;
+                                     aux =aux->prox;
+                                }
+                            }//fim do while
+
+                            if(achou==0){
+                                if(achou==0){
+                                 printf("\nNao encontrado\n");
+                                 break;
+                                }else if(achou == 1){
+                                  printf("\nElemento apagado 1 vez\n");
+                                  break;
+                                }else{
+                                  printf("\nElemento apagado %d vezes\n", achou);
+                                  break;
+                                 }
+                      
+                            }
+                        }
+                        //opcao = -1;
+                            break;
+///////////////////////////
+
+
+                        case 3:
+                        {    
+                                printf("Musicas com tempo maior que o digitado(em segundos) será apagado: \n"); 
+                                if (fgets(num, sizeof(num), stdin)) 
+                                 if (1 == sscanf(num, "%d", &segundos)) 
+
+
+                              aux = inicio;
+                            before = NULL;
+                             achou = 0;
+                             while (aux != NULL){
+                                     if(aux->min > segundos){//maior do que escolhido
+                                         //minutos digitado encontrado
+                                            achou = achou +1;
+                                                if(aux == inicio){
+                                                    //numero a ser apagado é o primeiro
+                                                         inicio = aux->prox;
+                                                      free(aux);
+                                                     aux=inicio;
+                                                 }else if(aux == end){
+                                         // o numeor a ser removido é o ultimo da lista     
+                                                  before->prox =NULL;
+                                                  end =  before;
+                                                     free(aux);
+                                                     aux =NULL;
+                                                 }else{
+                                         //o numero a ser apagado esta no meio da lista
+                                                 before->prox = aux->prox;
+                                                free(aux);
+                                                aux =before->prox;
+                                                    }
+
+                                        }else{
+                                             before = aux;
+                                             aux =aux->prox;
+                                             }
+                            }//fim do while
+                                
+                                if(achou==0){
+                                 printf("\nNao encontrado\n");
+                                 break;
+                                }else if(achou == 1){
+                                  printf("\nElemento apagado 1 vez\n");
+                                  break;
+                                }else{
+                                  printf("\nElemento apagado %d vezes\n", achou);
+                                  break;
+                                 }
+                        
+                        }
+                        opcao = -1;
+                            break;
+
+/////////////////////////////
+
+                        case 4:
+                        {   
+                                printf("Musicas com tempo maior que o digitado(em segundos) será apagado: \n"); 
+                                if (fgets(num, sizeof(num), stdin)) 
+                                 if (1 == sscanf(num, "%d", &segundos))                         
+                                 
+                              
+                             //armazena o tempo a ser  inserido
+
+
+                              aux = inicio;
+                                before = NULL;
+                             achou = 0;
+                             while (aux != NULL){
+                                    if(aux->min < segundos){//se for menor do que o digitado
+                                     //minutos digitado encontrado
+                                     achou = achou +1;
+                                    if(aux == inicio){
+                                    //numero a ser apagado é o primeiro
+                                     inicio = aux->prox;
+                                     free(aux);
+                                     aux=inicio;
+                                      }else if(aux == end){
+                                    // o numeor a ser removido é o ultimo da lista     
+                                     before->prox =NULL;
+                                     end =  before;
+                                    free(aux);
+                                    aux =NULL;
+                                     }else{
+                                    //o numero a ser apagado esta no meio da lista
+                                     before->prox = aux->prox;
+                                      free(aux);
+                                        aux =before->prox;
+                                         }
+
+                                      }else{
+                                         before = aux;
+                                         aux =aux->prox;
+                                        }
+
+                                }//fim do while
+                              if(achou==0){
+                                 printf("\nNao encontrado\n");
+                                 break;
+                                }else if(achou == 1){
+                                  printf("\nElemento apagado 1 vez\n");
+                                  break;
+                                }else{
+                                  printf("\nElemento apagado %d vezes\n", achou);
+                                  break;
+                            }
                     }
-                }
-                return head;
+                           
+                            opcao = -1;
+                            break;
+
+///////////////////////////
+                        case 2:
+                        {    //por NOME da banda
+                                 aux = inicio;
+                                 before = NULL;
+                                 achou = 0;
+                            while (aux != NULL){
+                      
+            
+                                printf("O Nome da Banda que deseja apagar: "); 
+                                 fflush(stdin);// limpa o buffer para entrada
+                                 fgets(apagabanda,sizeof(apagabanda),stdin);{ //armazena o nome da bnda a ser  inserida
+                                 apagabanda[strlen(apagabanda)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
+                            
+                                 if(0 == strcmp(aux->nomeBanda,apagabanda)){ //compara as strings e retorna 0 se forem iguais ignorando CASE SENSITIVE
+                                 //minutos digitado encontrado
+                                    achou = achou +1;
+                                        if(aux == inicio){
+                                         //numero a ser apagado é o primeiro
+                                             inicio = aux->prox;
+                                             free(aux);
+                                              aux=inicio;
+                                         }else if(aux == end){
+                                            // o numeor a ser removido é o ultimo da lista     
+                                             before->prox =NULL;
+                                            end =  before;
+                                             free(aux);
+                                            aux =NULL;
+                                             }else{
+                                             //o numero a ser apagado esta no meio da lista
+                                                before->prox = aux->prox;
+                                                free(aux);
+                                                aux =before->prox;
+                                            }
+                                 }else{
+                                         before = aux;
+                                         aux =aux->prox;
+                                        }
+
+                            }//fim do while
+                                
+                                if(achou==0){
+                                 printf("\nNao encontrado\n");
+                                 break;
+                                }else if(achou == 1){
+                                  printf("\nElemento apagado 1 vez\n");
+                                  break;
+                                }else{
+                                  printf("\nElemento apagado %d vezes\n", achou);
+                                break;
+                                }
+                        
+                        opcao = -1;
+                        break;
+                    }
+                         default:
+                         break;   
+                
+        }
+    }                    
+    return inicio;
 }
 
 void * esvaziaLista(t_list * head){
@@ -535,13 +802,13 @@ void  printList(t_list * inicio, t_list * proximo ){
     int h,m,s;
     int segundos;
     s=0;m=0;h=0;segundos=0;//inicializando as variaveis
-    char linha[100];
     
-   ClearScreen();//limpa texto do terminal
+    //system("cls");
+  // ClearScreen();//limpa texto do terminal
 
         next = inicio;
-       printf("\n|########################################      PLAYLIST      ########################################|\n\n");
-          printf("\n|       MUSICA      -       BANDA                                           TEMPO                 |\n");
+       printf("\n|########################################      PLAYLIST      ########################################|\n");
+          printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n");
         while(next != NULL){
             segundos = next -> min;
             
@@ -550,7 +817,7 @@ void  printList(t_list * inicio, t_list * proximo ){
                 m=(int)segundos/60;
                 h=(int)m/60;
                 fflush(stdout);
-                printf("|   %.*s - %.*s                              %d min:%d seg  |\n",30,next->nomeMusica,30, next->nomeBanda , m, s);
+                printf(" %-40s - %-45s%d min:%d seg\n",next->nomeMusica, next->nomeBanda , m, s);
                
             next = next->prox;
             }else{
@@ -559,12 +826,12 @@ void  printList(t_list * inicio, t_list * proximo ){
                 m=(int)segundos/60;
                 h=(int)m/60;
                  fflush(stdout);
-                printf("|   %.*s - %.*s                              %d h:%d min:%d seg  |\n",30,next->nomeMusica,30, next->nomeBanda , h,m,s);
+                printf(" %-40s - %-42s%d h:%d min:%d seg\n",next->nomeMusica,next->nomeBanda , h,m,s);
                 next = next->prox;
             }
            
         }//end while
-        printf("\n|########################################     PLAYLIST     ########################################|\n\n");
+        printf("\n|########################################      PLAYLIST      ########################################|\n\n");
 
         
         
@@ -574,7 +841,7 @@ void  printList(t_list * inicio, t_list * proximo ){
 void ClearScreen(){
     int n;
     for (n = 0; n < 5; n++)
-      printf( "\n\n\n\n\n\n\n\n\n\n" );
+      printf( "\n\n\n\n" );
     }
 
- 
+   
