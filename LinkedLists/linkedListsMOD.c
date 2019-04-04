@@ -361,8 +361,8 @@ void  * midInsert(t_list * head , char * music, char * band, int min){
 
 						if(inicio == NULL){
 							//lista estava vazia e o elemento sera o prim, ultimo e central
-							head = new;
-                            if(head == NULL){
+							inicio = new;
+                            if(inicio == NULL){
                              printf("ERRO AO ALOCAR MEMORIA\n");
                                 }else{
                                     
