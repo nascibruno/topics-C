@@ -27,6 +27,7 @@ typedef struct list {
 void ClearScreen();
 void menu(void);
 void menuApaga(void);
+void listaVazia(void);
 void * inicInsert(t_list * head , char * music, char * band, int min);
 void * midInsert(t_list * head , char * music, char *band, int min);
 void * lastInsert(t_list * head , char * music, char * band, int min);
@@ -160,13 +161,15 @@ void main() {
                 
                  // APAGA ITENS DA LISTA
             
-            //limpa tela
+                //limpa tela
                 do{
                  system("cls");
 
                     if (head == NULL){
-                          printf("\n\n!!!Lista VAZIA!!!\n\n\a");
-                        apaga=5;
+
+                            listaVazia();
+                            apaga=5;
+
                         }else{
 
                          printList( head , head->prox);
@@ -201,11 +204,14 @@ void main() {
             if(op == 6 ){
                 system("cls");
                 if(head == NULL){
-                 printf("\n\nA Lista está Vazia\n\n");
+                    
+                    listaVazia();
                 
                  }  
                  else{
+
                      printList( head , head->prox); 
+
                  }
                 
             }//end if 6
@@ -218,6 +224,19 @@ void main() {
   void menu(void){
     //  system("cls");
     //ClearScreen();
+
+    printf("\n****** Verificando a localidade corrente ********\n\n");
+    printf ("Localidade corrente: %s\n", setlocale(LC_ALL,NULL) );
+    printf("Não é possível usar acentuação ou ç corretamente...\n\n");
+
+    printf("\n****** Alterando para a localidade do sistema ********\n\n");
+
+     //alterando para o padrão do sistema operacional
+    printf("A localidade corrente agora é %s \n",setlocale(LC_ALL,"portuguese-brazilian"));
+    printf("Agora não tem mais problema algum!\n");
+    printf("Já posso usar acentuação e também o caracter ç...\n\n\n");
+
+
     printf("\n MENU DE OPCOES \n");
     printf("\n\n1 - Inserir no início da lista");
     printf("\n2 - Inserir no fim da lista");
@@ -601,10 +620,10 @@ void * apagaItem(t_list * head , int erase){
                                 if (fgets(num, sizeof(num), stdin)) 
                                  if (1 == sscanf(num, "%d", &segundos)) 
 
+                                aux = inicio;
+                                before = NULL;
+                                 achou = 0;
 
-                              aux = inicio;
-                            before = NULL;
-                             achou = 0;
                              while (aux != NULL){
                                      if(aux->min > segundos){//maior do que escolhido
                                          //minutos digitado encontrado
@@ -660,9 +679,9 @@ void * apagaItem(t_list * head , int erase){
                              //armazena o tempo a ser  inserido
 
 
-                              aux = inicio;
+                                aux = inicio;
                                 before = NULL;
-                             achou = 0;
+                                achou = 0;
                              while (aux != NULL){
                                     if(aux->min < segundos){//se for menor do que o digitado
                                      //minutos digitado encontrado
@@ -721,7 +740,6 @@ void * apagaItem(t_list * head , int erase){
 
                             while (aux != NULL){
                       
-            
                                  if(0 == strcmp(aux->nomeBanda,apagabanda)){ //compara as strings e retorna 0 se forem iguais ignorando CASE SENSITIVE
                                  //minutos digitado encontrado
                                     achou = achou +1;
@@ -760,14 +778,14 @@ void * apagaItem(t_list * head , int erase){
                                 break;
                                 }
                         
-                        
+                        }
                         break;
-                    }
-                         default:
-                         break;   
-                
-        }
-    }                    
+                    
+                    default:
+                    break;   
+                } 
+        
+        }                    
     return inicio;
 }
 
@@ -812,7 +830,7 @@ void  printList(t_list * inicio, t_list * proximo ){
   // ClearScreen();//limpa texto do terminal
 
         next = inicio;
-       printf("\n|########################################      PLAYLIST      ########################################|\n");
+          printf("\n|########################################      PLAYLIST      ########################################|\n");
           printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n");
         while(next != NULL){
             segundos = next -> min;
@@ -838,11 +856,21 @@ void  printList(t_list * inicio, t_list * proximo ){
         }//end while
         printf("\n|########################################      PLAYLIST      ########################################|\n\n");
 
-        
-        
          
         
 }
+
+void listaVazia(void){
+     printf("\n|########################################      PLAYLIST      ########################################|\n\n");
+     printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n\n");
+     printf(" Nunhum item na lista\n");
+     printf("\n\n");
+     printf("\n|########################################      PLAYLIST      ########################################|\n");
+}
+
+
+
+
 void ClearScreen(){
     int n;
     for (n = 0; n < 5; n++)
