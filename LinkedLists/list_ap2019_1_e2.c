@@ -18,7 +18,8 @@ typedef struct list {
                      char nomeAluno[tamNome]; //nome do Aluno
                      char email[tamEmail];  //email do Aluno
                      int RU; //RU do Aluno
-                     struct list *prox; 
+                     struct list *prox; //aponta para o proximo a direita
+                     struct list *ante; //aponta para o anterior a esquerda
                      }t_list; //sinonimo para struct list
 
 
@@ -28,9 +29,9 @@ void ClearScreen();
 void  menu();
 void menuApaga(void);
 void listaVazia(void);
-void * inicInsert(t_list * head , char * name, char * band, int RU);
-void * midInsert(t_list * head , char * name, char *band, int RU);
-void * lastInsert(t_list * head , char * name, char * band, int RU);
+void * inicInsert(t_list * head , char * name, char * email, int RU);
+void * midInsert(t_list * head , char * name, char *email, int RU);
+void * lastInsert(t_list * head , char * name, char * email, int RU);
 void  printList(t_list * inicio, t_list * proximo );
 void * apagaItem(t_list * head , int erase);
 void * esvaziaLista(t_list * head);
@@ -42,16 +43,71 @@ void main() {
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 
                            //t_list identifica o ponteiro 
-    t_list *inicio = NULL ; //lista vazia, logo, ponteiro com valor NULL
-    t_list *fim  ; //ponteiro fim conntera o ultimo elemento da lista
+    t_list *inicio  =NULL ; //lista vazia, logo, ponteiro com valor NULL
+    t_list *fim     =NULL  ; //ponteiro fim conntera o ultimo elemento da lista
     t_list *aux;         //ponteiro auxiliar
     t_list *anterior;    //ponteiro auxiliar
     t_list *proximo;     //ponteiro para o proximo
-    t_list *head = NULL;
+    t_list *head    =NULL;
     //declara variaveis 
     int op,apaga, nRU, achou;
     char nome[tamNome], email[tamEmail];
     char num[tamRU];//converter num em nRU
+
+//inserção na planilha structs que vao receber os dados
+t_list aluno0;
+t_list aluno1;
+t_list aluno2;
+t_list aluno3;
+t_list aluno4;
+t_list aluno5;
+t_list aluno6;
+t_list aluno7;
+t_list aluno8;
+t_list aluno9;
+
+aluno0.nomeAluno[tamNome]     ="Ronaldo Cruzeiro";
+aluno0.email    [tamEmail]    ="ronaldo@cruzeiro.com.br" ;
+aluno0.RU                     = 2543556   	 ;
+
+aluno1.nomeAluno[tamNome]     ="Rivaldo Santa Cruz";
+aluno1.email    [tamEmail]    ="rivaldo@santacruzfc.com.br" ;
+aluno1.RU                     = 2547556   	 ;
+
+aluno2.nomeAluno[tamNome]     ="Romario Flamengo";
+aluno2.email    [tamEmail]    ="romario@flamengo.com.br" ;
+aluno2.RU                     = 2540256   	 ;
+
+aluno3.nomeAluno[tamNome]     ="Zico Flamengo";
+aluno3.email    [tamEmail]    ="zico@flamengo.com.br" ;
+aluno3.RU                     = 2549556   	 ;
+
+aluno4.nomeAluno[tamNome]     ="Bruno do Nascimento Franco";
+aluno4.email    [tamEmail]    ="sirbrunovsky@hotmail.com" ;
+aluno4.RU                     = 2575362   	 ;
+
+aluno5.nomeAluno[tamNome]     ="Socrates Botafogo";
+aluno5.email    [tamEmail]    ="socrates@botafogo.com.br" ;
+aluno5.RU                     = 2544656   	 ;
+
+aluno6.nomeAluno[tamNome]     ="Carlos Bala Sport";
+aluno6.email    [tamEmail]    ="cbala@sportrecife.com.br" ;
+aluno6.RU                     = 2519456   	 ;
+
+aluno7.nomeAluno[tamNome]     ="Cafu Sao Paulo";
+aluno7.email    [tamEmail]    ="cafu@saopaulofc.com.br" ;
+aluno7.RU                     = 2508456   	 ;
+
+aluno8.nomeAluno[tamNome]     ="Bebeto Vitoria";
+aluno8.email    [tamEmail]    ="bebeto@vitoriafc.com.br" ;
+aluno8.RU                     = 2537456   	 ;
+
+aluno9.nomeAluno[tamNome]     ="Roberto Carlos USJ";
+aluno9.email    [tamEmail]    ="robertocarlos@usjfc.com.br" ;
+aluno9.RU                     = 2545286   	 ;
+
+
+
 
 
     do{
@@ -255,17 +311,17 @@ void menuApaga(void){
 
 
 
-void * inicInsert(t_list * head , char * name, char * band, int RU){
+void * inicInsert(t_list * head , char * name, char * email, int RU){
        //typedef faz com que naao se precise digitar novamente o tipo de 
                            //t_list identifica o ponteiro 
     t_list *inicio ; //lista vazia, logo, ponteiro com valor NULL
     t_list *end = NULL ; //ponteiro fim conntera o ultimo elemento da lista
-    //t_list *aux;         //ponteiro auxiliar
-    t_list *before;    //ponteiro auxiliar
+    t_list *aux;         //ponteiro auxiliar
+    t_list *before;    //ponteiro auxiliar anterior
     t_list *next;     //ponteiro para o proximo
     inicio = head;  //recebe o head
     
-    int op, tempo, achou;
+    int op, nRU, achou;
     /*strcpy(char *dest,char *src); // tratamento de stringgs
     
    memset(dest, '\0', sizeof(dest));
@@ -274,13 +330,13 @@ void * inicInsert(t_list * head , char * name, char * band, int RU){
 
     sprintf(student_mark.passfail,"DISTINCTION\n");
     */
-    char nome[tamNome], email[tamEmail];
+    char nome[tamNome], correio[tamEmail];
     memset(nome, '\0', sizeof(nome));
-    memset(email, '\0', sizeof(email));
+    memset(correio, '\0', sizeof(correio));
     strcpy(nome,name);
-    strcpy(email,band);
+    strcpy(correio,email);
    
-    tempo = RU;
+    nRU = RU;
     
     //declara variaveis 
      
@@ -291,17 +347,20 @@ void * inicInsert(t_list * head , char * name, char * band, int RU){
 						  //aponta para preencher a estrutura 
 			        	if(inicio == NULL){
                             printf("ERRO AO ALOCAR MEMORIA\n");
-                            return NULL;
                             system("pause");
+                            return NULL;
+                            
                           }else{
-
+                             //printf("ERRO AO ALOCAR MEMORIA\n");
 			            	before = NULL;
-			            	
+                            next = NULL;
+			            	//before->ante = before;
+                            
 			            	strcpy(inicio -> nomeAluno,nome);
                             strcpy(inicio -> email,email);
-                            inicio -> RU = tempo;	    // ponteiro para RU na estrutura list o primeiro e o ultimo
+                            inicio -> RU = nRU;	    // ponteiro para RU na estrutura list o primeiro e o ultimo
                             
-			            	end = inicio ;
+			            	  end = inicio ;
                               end->prox = NULL;
                               
                         }//fim if teste malloc
@@ -313,28 +372,57 @@ void * inicInsert(t_list * head , char * name, char * band, int RU){
                     //se alista contem elementos e o novo elemento sera inserido no inic
                         //aloca nova memoria para o proximo campo TRABALHANDO COM OS ENDEREÇOS
                     
-                            before = inicio;
+                            aux = inicio;
                                  // NOVO HEAD
                             head = (t_list *)malloc(sizeof(t_list));//##Aloca memoria para inicio sizeof ## é uma função que retorna o tamanho de um tipo( e nao da variavel) malloc
 													   // retorna NULL caso NAO CONSIGA mALOCAR
 						                                 //aponta para preencher a estrutura 
 			               if(head == NULL){
-                               printf("ERRO AO ALOCAR  MEMORIA NOVAMENTE\n");
-                               return NULL;
+                               printf("ERRO AO ALOCAR MEMORIA NOVAMENTE\n");
                                system("pause");
+                               return NULL;
+                               
                                   }else{
-			                	
-                                     next = before;
+                                      before = NULL;
+                                     next = aux;
+                                     aux->ante = head;
+
+                                     
+
                                 	strcpy(head -> nomeAluno,nome);
                                     strcpy(head -> email,email);
-                
-				                     head -> RU = tempo;	
-			                        head -> prox = before;
+                                    head -> RU = nRU;	
+
+			                        head -> prox = next;
+
+                                    while(aux != NULL && head -> RU > aux -> RU){
+
+                                            before = aux;
+                                            aux = aux -> prox;
+
+                                    }
+
+                                    if(before == NULL){
+                                            //já é o menor
+                                             inicio = head; 
+                                            inicio->prox = before;
+                                    }else if(aux == NULL){
+                                         end -> prox = head;
+                                         end = head;
+                                         end->prox = NULL;
+
+                                    }else{
+
+                                        before -> prox = head;
+                                        head -> prox = aux;
+                                    }
+
                                       
                                   }//fim de if teste malloc
                                   
-                                inicio = head; 
-                                inicio->prox = before; 
+                                
+
+
                                 
                                 }//fim ifelse de teste de nulidade do head
                                 
@@ -347,7 +435,7 @@ void * inicInsert(t_list * head , char * name, char * band, int RU){
 
 
 
-void  * midInsert(t_list * head , char * name, char * band, int RU){
+void  * midInsert(t_list * head , char * name, char * email, int RU){
 
         /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -365,11 +453,11 @@ void  * midInsert(t_list * head , char * name, char * band, int RU){
 
 
 
-     char nome[tamNome], email[tamEmail];
+     char nome[tamNome], correio[tamEmail];
     memset(nome, '\0', sizeof(nome));
-    memset(email, '\0', sizeof(email));
+    memset(correio, '\0', sizeof(correio));
     strcpy(nome,name);
-    strcpy(email,band);
+    strcpy(correio,email);
 
     
     
@@ -444,7 +532,7 @@ void  * midInsert(t_list * head , char * name, char * band, int RU){
 
 }
 
-void * lastInsert(t_list * head , char * name, char * band, int RU){
+void * lastInsert(t_list * head , char * name, char * email, int RU){
 
             /*typedef faz com que naao se precise digitar novamente o tipo de 
                            t_list identifica o ponteiro */
@@ -458,11 +546,11 @@ void * lastInsert(t_list * head , char * name, char * band, int RU){
     int tempo;
 
 
-     char nome[tamNome], email[tamEmail];
+     char nome[tamNome], correio[tamEmail];
     memset(nome, '\0', sizeof(nome));
-    memset(email, '\0', sizeof(email));
+    memset(correio, '\0', sizeof(correio));
     strcpy(nome,name);
-    strcpy(email,band);
+    strcpy(correio,email);
    
     tempo = RU;
 
@@ -804,7 +892,7 @@ void  printList(t_list * inicio, t_list * proximo ){
 
 void listaVazia(void){
      printf("\n|########################################      PLAYLIST      ########################################|\n\n");
-     printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n\n");
+     printf("\n %-43s%-45s%s","NOME","E-mail","Matrícula(RU)\n");
      printf(" Nunhum item na lista\n");
      printf("\n\n");
      printf("\n|########################################      PLAYLIST      ########################################|\n");
