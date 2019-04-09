@@ -38,7 +38,7 @@ void * esvaziaLista(t_list * head);
 
 void main() {
     system("cls");
-    setlocale(LC_ALL, "pt-BR");
+    setlocale(LC_ALL, "pt-BR.UTF-8");
             //Definindo o registro
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 

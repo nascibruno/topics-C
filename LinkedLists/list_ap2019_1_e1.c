@@ -37,7 +37,7 @@ void * esvaziaLista(t_list * head);
 
 void main() {
     system("cls");
-    setlocale(LC_ALL, "pt-br");
+    setlocale(LC_ALL, "pt-BR.UTF-8");
             //Definindo o registro
             //cada elemento da lista
         //typedef faz com que naao se precise digitar novamente o tipo de 
@@ -107,7 +107,7 @@ void main() {
            //printf("\n2 - Inserir no fim da lista");
             printf("\n\nDigite os dados a serem inseridos no fim da Playlist.\n");
 
-            printf("O Nome da Musica: "); 
+            printf("O Nome da Música: "); 
             fflush(stdin);// limpa o buffer para entrada
             if(fgets(musica,sizeof(musica),stdin)){ //armazena o nome da bnda a ser  inserida
             musica[strlen(musica)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
@@ -117,7 +117,7 @@ void main() {
              if(fgets(banda,sizeof(banda),stdin)){ //armazena o nome da bnda a ser  inserida
             banda[strlen(banda)-1]='\0';}
 
-            printf("O valor Duração da música (em Segundos ): ");
+            printf("O valor Duração da Música (em Segundos ): ");
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
                         printf("\n");
@@ -134,7 +134,7 @@ void main() {
             //printf("\n3 - Inserir no meio da lista");
             printf("\n\nDigite o valor a ser inserido no meio da lista.\n");
 
-            printf("O Nome da Musica: "); 
+            printf("O Nome da Música: "); 
             fflush(stdin);// limpa o buffer para entrada
             fgets(musica,sizeof(musica),stdin);{ //armazena o nome da bnda a ser  inserida
             musica[strlen(musica)-1]='\0';}//caractere anterior fecha a string e evita que fgets pule uma linha
@@ -144,7 +144,7 @@ void main() {
              if(fgets(banda,sizeof(banda),stdin)){ //armazena o nome da bnda a ser  inserida
             banda[strlen(banda)-1]='\0';}
 
-            printf("O valor Duração da música (em Segundos): ");
+            printf("O valor Duração da Música (em Segundos): ");
             if (fgets(num, sizeof(num), stdin)) {
                         if (1 == sscanf(num, "%d", &tempo)) {
                         printf("\n");
@@ -246,12 +246,12 @@ void  menuApaga(void){
 
                 printf("\n\n\n");
                 printf("\nQual apagar:");
-                printf("\n\n1 - Por nome da musica.");
+                printf("\n\n1 - Por nome da Música.");
                 printf("\n2 - Por nome da banda.");
                 printf("\n3 - Por tempo maior que:");
                 printf("\n4 - Por tempo menor que:");
                 printf("\n5 - Sair");
-                printf("\n\nDigite sua opcao: ");
+                printf("\n\nDigite sua opção: ");
 
 
 }
@@ -308,7 +308,7 @@ void * inicInsert(t_list * head , char * music, char * band, int min){
                               end->prox = NULL;
                               
                         }//fim if teste malloc
-                          printf("Musica inserida foi a primeira da lista. Não havia ítens na lista.\n\n");
+                          printf("Música inserida foi a primeira da lista. Não havia ítens na lista.\n\n");
 			        	system("pause");
                         return inicio;
 				
@@ -564,7 +564,7 @@ void * apagaItem(t_list * head , int erase){
                  //todas as ocorrencias da lista, iguais ao minutos digitado serao removidas
                     switch (opcao)
                     {
-/////////////////////                        
+                        
                         case 1:
                         {
                                 //por NOME
@@ -685,7 +685,7 @@ void * apagaItem(t_list * head , int erase){
                         
                             break;
 
-/////////////////////////////
+
 
                         case 4:
                         {   
@@ -746,7 +746,7 @@ void * apagaItem(t_list * head , int erase){
                             
                             break;
 
-///////////////////////////
+
                         case 2:
                         {    //por NOME da banda
                                  aux = inicio;
@@ -857,7 +857,7 @@ void  printList(t_list * inicio, t_list * proximo ){
 
         next = inicio;
           printf("\n|###########################################      PLAYLIST      ###########################################|\n\n");
-          printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n");
+          printf("\n %-43s%-45s%s","MÚSICA","BANDA","TEMPO\n");
         while(next != NULL){
             segundos = next -> min;
             
@@ -888,8 +888,8 @@ void  printList(t_list * inicio, t_list * proximo ){
 
 void listaVazia(void){
      printf("\n|########################################      PLAYLIST      ########################################|\n\n");
-     printf("\n %-43s%-45s%s","MUSICA","BANDA","TEMPO\n\n");
-     printf(" Nunhum item na lista\n");
+     printf("\n %-43s%-45s%s","MÚSICA","BANDA","TEMPO\n\n");
+     printf(" Nunhum ítem na lista\n");
      printf("\n\n");
      printf("\n|########################################      PLAYLIST      ########################################|\n");
      system("pause");
