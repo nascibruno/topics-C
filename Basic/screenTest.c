@@ -1,3 +1,4 @@
+
 #ifdef _WIN32
 #include <windows.h>    // for win32 API functions
 #include <io.h>         // for _get_osfhandle()
@@ -8,6 +9,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+
+//credits to user2371524
+//https://stackoverflow.com/questions/44234508/change-text-color-using-c
 
 // use an enum for platform-independent interface:
 typedef enum TextColor
