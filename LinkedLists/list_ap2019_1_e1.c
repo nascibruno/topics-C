@@ -1,3 +1,5 @@
+/* Author Bruno do Nascimento Franco RU 2575362  ABR 2019 Brazil*/
+
 #include <stdio.h>//printf
 #include <stdlib.h>//malloc
 #include <string.h>
