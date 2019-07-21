@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <conio.h>
-int main(){
+
+int main(void){
 int a;
 int b;
 
@@ -15,7 +15,7 @@ printf("\n");
 
 printf("A soma de a + b : %d\n",a+b);
 
-system("pause");
+
 return 0;
 
 }
