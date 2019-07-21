@@ -21,7 +21,7 @@ int main(void)
 	fflush(stdin);
 	
 	/*usaremos o comando fgets() para ler strings, no caso o nome
-	do aluno e a disciplina
+	do aluno e a disciplina novo
 	fgets(variavel, tamanho da string, entrada)
 	como estamos lendo do teclado a entrada é stdin (entrada padrão),
 	porém em outro caso, a entrada tambem poderia ser um arquivo */
